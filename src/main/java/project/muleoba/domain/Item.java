@@ -3,6 +3,8 @@ package project.muleoba.domain;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@DynamicInsert
 public class Item {
 
     @Id
@@ -29,13 +32,14 @@ public class Item {
     @NotNull
     private String photo;
 
+    @ColumnDefault("0")
     private Long requestNum;
 
     @NotNull
     private LocalDateTime uploadTime;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
+    @ColumnDefault("'Normal'")
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
