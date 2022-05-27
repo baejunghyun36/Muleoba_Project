@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/Muleoba?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+  devtools:
+    livereload:
+      enabled: true
+
+  jpa:
+    # show-sql:
+
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        # show_sql: true
+        format_sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: FamilyStory.mailservice@gmail.com
+    password: myFamily_team6!!
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+
+logging.level:
+  org.hibernate.SQL: debug
+# org.hibernate.type: trace
+
+
+
