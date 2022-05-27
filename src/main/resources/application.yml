@@ -1,15 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-<<<<<<< HEAD
-    url: jdbc:mysql://localhost:3306/Muleoba?serverTimezone=Asia/Seoul
-    username: root
-    password: 1234
-=======
     url: jdbc:mysql://localhost:3306/Muleobadb?serverTimezone=Asia/Seoul
     username: root
-    password: mcys1309
->>>>>>> 1247f591fc70540bbd5ba44b77e826dfb605d5ff
+    password: 1234
 
   servlet:
     multipart:
@@ -23,32 +17,13 @@ spring:
 
   jpa:
     # show-sql:
-<<<<<<< HEAD
-
-    hibernate:
-      ddl-auto: none
-=======
     hibernate:
       ddl-auto: create
->>>>>>> 1247f591fc70540bbd5ba44b77e826dfb605d5ff
     properties:
       hibernate:
         # show_sql: true
         format_sql: true
 
-<<<<<<< HEAD
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: FamilyStory.mailservice@gmail.com
-    password: myFamily_team6!!
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
-
-
-=======
->>>>>>> 1247f591fc70540bbd5ba44b77e826dfb605d5ff
 logging.level:
   org.hibernate.SQL: debug
 # org.hibernate.type: trace
