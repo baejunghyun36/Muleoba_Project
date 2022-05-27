@@ -3,6 +3,7 @@ package project.muleoba.domain;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@DynamicInsert
 public class Transaction {
 
     @Id
@@ -19,7 +21,7 @@ public class Transaction {
     @NotNull
     private Long requestIID;
 
-    @NotNull
+    @Column(updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime requestTime;
 
     @NotNull
@@ -31,5 +33,5 @@ public class Transaction {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "aID")
-    private Alarm alarm; //배송정보
+    private Alarm alarm;
 }
