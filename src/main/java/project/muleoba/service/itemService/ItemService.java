@@ -1,8 +1,12 @@
 package project.muleoba.service.itemService;
 
+import org.springframework.web.multipart.MultipartFile;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
 public interface ItemService {
+
+    void saveItem(String photo, String itemName, String category, String content);
+
+    String filePath(List<MultipartFile> images) throws Exception;
 }

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>muleoba</title>
+</head>
+<body>
+
+<form role="form" enctype="multipart/form-data">
+    <div class="formBox">
+        <div>
+            <h2 class="title">아이템 등록</h2>
+        </div>
+
+        <div>
+            <label for="photo" class="subTitle">사진 추가</label>
+            <input type="file" id="photo" name="photo" multiple="multiple">
+        </div>
+
+        <div>
+            <div>
+                <label for="itemName" class="subTitle">물품명</label>
+                <input type="text" id="itemName" name="itemName">
+            </div>
+            <div>
+                <label for="category" class="subTitle">카테고리 선택</label>
+                <select id="category" name="category">
+                    <option value="1">패션의류/잡화/뷰티</option>
+                    <option value="2">출산/유아용품</option>
+                    <option value="3">식품</option>
+                    <option value="4">주방용품/생황용품</option>
+                    <option value="5">홈인테리어</option>
+                    <option value="6">가전디지털</option>
+                    <option value="7">스포츠/레저</option>
+                    <option value="8">자동차용품</option>
+                    <option value="9">도서/음반/DVD</option>
+                    <option value="10">문구/오피스/option>
+                    <option value="11">기타</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="content" class="subTitle">글 내용</label>
+                <textarea id="content" rows="4" name="content"></textarea>
+            </div>
+        </div>
+
+        <div>
+            <br>
+            <button id="submitButton">등록하기</button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+
+    let formData = new FormData();
+    const photo = document.querySelector('#photo');
+    photo.addEventListener('change', (evt) => {
+        let files = Array.from(photo.files);
+        files.forEach(file => {
+            formData.append("photo", file);
+        })
+    });
+
+    const submitButton = document.querySelector('#submitButton');
+    submitButton.addEventListener('click', function(evt){
+        evt.preventDefault();
+
+        const photo = document.querySelector('#photo');
+        const itemName = document.querySelector('#itemName');
+        const category = document.querySelector('#category');
+        const content = document.querySelector('#content');
+
+        if(!itemName.value){
+            evt.preventDefault();
+            itemName.focus();
+            return;
+        }
+        else if(!category.value){
+            evt.preventDefault();
+            category.focus();
+            return;
+        }
+        else if(!content.value){
+            evt.preventDefault();
+            content.focus();
+            return;
+        }
+        else{
+            let data = {
+                itemName: itemName.value,
+                category: category.value,
+                content: content.value
+            };
+            formData.append('data', new Blob([JSON.stringify(data)], {type: "application/json"}));
+            console.log('before ajax');
+            $.ajax({
+                url: "/uploadItem",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(data){
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+</script>
+
+</body>
+</html>
