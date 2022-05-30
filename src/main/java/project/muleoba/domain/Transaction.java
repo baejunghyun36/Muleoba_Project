@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@DynamicInsert
 public class Transaction {
 
     @Id
@@ -20,7 +21,7 @@ public class Transaction {
     @NotNull
     private Long requestIID;
 
-    @NotNull
+    @Column(updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime requestTime;
 
     @NotNull

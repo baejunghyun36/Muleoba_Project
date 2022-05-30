@@ -35,7 +35,7 @@ public class Item {
     @ColumnDefault("0")
     private Long requestNum;
 
-    @NotNull
+    @Column(updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime uploadTime;
 
     @Enumerated(EnumType.STRING)
