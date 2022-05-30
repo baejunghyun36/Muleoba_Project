@@ -1,4 +1,8 @@
 package project.muleoba.service.alarmService;
 
-public class AlarmServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class AlarmServiceImpl implements AlarmService{
+
 }
