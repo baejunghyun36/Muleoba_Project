@@ -1,4 +1,11 @@
 package project.muleoba.repository;
 
-public interface ItemRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import project.muleoba.domain.Item;
+
+@Repository
+public interface ItemRepository extends JpaRepository<Item, Long> {
+
+    Item findByPhoto(String photo);
 }

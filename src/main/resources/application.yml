@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/muleobadb?serverTimezone=Asia/Seoul
     username: root
-    password: wjdgusdl55!
+    password: mcys1309
 
   servlet:
     multipart:
@@ -18,7 +18,7 @@ spring:
   jpa:
     # show-sql:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         # show_sql: true
