@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.muleoba.domain.Item;
+import project.muleoba.domain.Status;
 import project.muleoba.domain.Transaction;
 import project.muleoba.domain.User;
 import project.muleoba.repository.ItemRepository;
@@ -34,6 +35,11 @@ public class TransactionServiceImplTest {
 
     @Autowired
     TransactionService transactionService;
+
+    @Autowired
+    TransactionRepository transactionRepository;
+
+
 
     @Test
     @Transactional
@@ -93,10 +99,32 @@ public class TransactionServiceImplTest {
     @Test
     @Transactional
     public void testTransactionDelete() { //거래 삭제 테스트
-        transactionService.save(3L, 4L);
         transactionService.save(1L, 2L);
         transactionService.save(3L, 4L);
-        transactionService.save(1L, 2L);
         transactionService.deleteTransaction(1L);
+    }
+
+
+    @Test
+    @Transactional
+    public void testTransactionAcceptRequest(){
+
+        Item item = new Item();
+        item.setItem("의자");
+        item.setCategory("가구");
+        item.setPhoto("url");
+
+        Item item2 = new Item();
+        item2.setItem("책상");
+        item2.setCategory("가구");
+        item2.setPhoto("url");
+
+        itemRepository.save(item);
+        itemRepository.save(item2);
+        transactionService.save(1L, 2L);
+
+        transactionService.acceptRequest(1L, 2L);
+        Transaction transaction = transactionRepository.findByiidRequestIID(1L, 2L);
+        Assertions.assertThat(transaction.getStatus()).isEqualTo(Status.Reservation);
     }
 }

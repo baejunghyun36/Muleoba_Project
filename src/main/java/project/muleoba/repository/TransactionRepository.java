@@ -13,7 +13,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     Transaction findBytID(Long tID);
 
-
     @Query("select t from Transaction t where t.item.iID = :iid and t.requestIID = :requestIID")
-    Transaction findByiidRequestIID(Long iid, Long requestIID);
+    Transaction findByiidRequestIID(@Param("iid") Long iid,@Param("requestIID") Long requestIID);
 }

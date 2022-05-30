@@ -36,7 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction findTransaction(long tID) {
+    public Transaction findTransaction(Long tID) {
         Transaction t = transactionRepository.findBytID(tID);
         entityManager.refresh(t);
         return t;
@@ -71,9 +71,52 @@ public class TransactionServiceImpl implements TransactionService {
     public void acceptRequest(Long iid, Long requestIID) {
         Transaction t = transactionRepository.findByiidRequestIID(iid, requestIID);
         t.setStatus(Status.Reservation);
+        transactionRepository.save(t);
+    }
 
+    @Override
+    public void completeRequest(Long iid, Long requestIID) {
+        Transaction t = transactionRepository.findByiidRequestIID(iid, requestIID);
+        t.setStatus(Status.Complete);
+        transactionRepository.save(t);
+    }
 
+    @Override
+    public List<TransactionVO> completeRequestList(Long uID) {
 
+        List<Transaction> transactionList = transactionRepository.findAll();
+        List<TransactionVO> transactionVOList = new ArrayList<>();
+        for(Transaction t : transactionList ){
+            if(t.getStatus()==Status.Complete&&t.getItem().getUser().getUID()==uID) {
+                TransactionVO transactionVO = new TransactionVO();
+                transactionVO.setTID(t.getTID());
+                transactionVO.setAlarm(t.getAlarm());
+                transactionVO.setItem(t.getItem());
+                transactionVO.setRequestTime(t.getRequestTime());
+                transactionVO.setStatus(t.getStatus());
+                transactionVOList.add(transactionVO);
+            }
+        }
+        return transactionVOList;
+    }
+
+    @Override
+    public List<TransactionVO> requestMyItems(Long uID) {
+
+        List<Transaction> transactionList = transactionRepository.findAll();
+        List<TransactionVO> transactionVOList = new ArrayList<>();
+        for(Transaction t : transactionList ){
+            if(t.getStatus()==Status.Normal&&t.getItem().getUser().getUID()==uID) {
+                TransactionVO transactionVO = new TransactionVO();
+                transactionVO.setTID(t.getTID());
+                transactionVO.setAlarm(t.getAlarm());
+                transactionVO.setItem(t.getItem());
+                transactionVO.setRequestTime(t.getRequestTime());
+                transactionVO.setStatus(t.getStatus());
+                transactionVOList.add(transactionVO);
+            }
+        }
+        return transactionVOList;
 
     }
 }
