@@ -35,9 +35,18 @@ public class UserServiceImplTest {
         user.setName("조세윤");
         user.setPassword("1q2w3e4r");
         user.setAddress("경기 고양");
+
+        User user2 = new User();
+        user2.setEmail("joseyun924@naver.com");
+        user2.setNickName("yun123");
+        user2.setPhoneNumber("01012345678");
+        user2.setName("조세윤");
+        user2.setPassword("1q2w3e4r");
+        user2.setAddress("경기 고양");
         
         //when
         String findEmail = userService.saveUser(user);
+        String findEmail2 = userService.saveUser(user2);
         
         //then
         assertThat("spring").isEqualTo("spring");

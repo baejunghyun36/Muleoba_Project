@@ -10,6 +10,8 @@ import project.muleoba.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    User findByuID(Long uID);
+
     @Query("select u from User u where u.name = :name")
     User findByName(@Param("name") String name);
 
