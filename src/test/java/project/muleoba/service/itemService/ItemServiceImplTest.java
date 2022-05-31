@@ -138,7 +138,7 @@ public class ItemServiceImplTest {
     @Test
     public void mainList(){
         save();
-        List<ItemVO> itemVOList = itemService.itemList();
+        List<ItemVO> itemVOList = itemService.itemList("서울특별시 강남구");
         for(ItemVO i : itemVOList){
             System.out.println("i.getPhoto() = " + i.getPhoto());
             System.out.println("i.getCategory() = " + i.getCategory());
@@ -151,7 +151,7 @@ public class ItemServiceImplTest {
     @Test
     public void mainListCategory(){
 
-        List<ItemVO> itemVOList = itemService.itemCategoryList("가구");
+        List<ItemVO> itemVOList = itemService.itemCategoryList("가구", "서울특별시 강남구");
         for(ItemVO i : itemVOList){
             System.out.println("i.getPhoto() = " + i.getPhoto());
             System.out.println("i.getCategory() = " + i.getCategory());
