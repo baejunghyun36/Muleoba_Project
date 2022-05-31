@@ -99,6 +99,7 @@ public class TransactionServiceImplTest {
     @Test
     @Transactional
     public void testTransactionDelete() { //거래 삭제 테스트
+
         transactionService.save(1L, 2L);
         transactionService.save(3L, 4L);
         transactionService.deleteTransaction(1L);

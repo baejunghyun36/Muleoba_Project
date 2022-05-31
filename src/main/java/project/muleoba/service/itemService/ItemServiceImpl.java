@@ -9,9 +9,11 @@ import project.muleoba.domain.Item;
 import project.muleoba.domain.User;
 import project.muleoba.repository.UserRepository;
 import project.muleoba.repository.ItemRepository;
+import project.muleoba.vo.ItemVO;
 
 import javax.transaction.Transactional;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -80,5 +82,60 @@ public class ItemServiceImpl implements ItemService{
         }
 
         return photoRoute;
+    }
+
+    @Override
+    public ItemVO detailItem(Long iID) {
+        Item item = itemRepository.findByiID(iID);
+        ItemVO itemVO = new ItemVO();
+        itemVO.setItem(item.getItem());
+        itemVO.setIID(item.getIID());
+        itemVO.setCategory(item.getCategory());
+        itemVO.setContent(item.getContent());
+        itemVO.setPhoto(item.getPhoto());
+        itemVO.setNickName(item.getUser().getNickName());
+        return itemVO;
+    }
+
+    @Override
+    public List<ItemVO> itemList() {
+        List <Item> itemList = itemRepository.findAllOrder();
+        List <ItemVO> itemVOList = new ArrayList<>();
+        for (Item item : itemList) {
+            ItemVO itemVO = new ItemVO();
+            itemVO.setIID(item.getIID());
+            itemVO.setItem(item.getItem());
+            itemVO.setCategory(item.getCategory());
+            itemVO.setContent(item.getContent());
+            itemVO.setPhoto(item.getPhoto());
+            itemVO.setNickName(item.getUser().getNickName());
+            itemVOList.add(itemVO);
+        }
+        return itemVOList;
+    }
+
+    @Override
+    public List<ItemVO> itemCategoryList(String category) {
+        List <Item> itemList = itemRepository.findAllOrder();
+        List <ItemVO> itemVOList = new ArrayList<>();
+        for (Item item : itemList) {
+            if(item.getCategory().equals(category)){
+                ItemVO itemVO = new ItemVO();
+                itemVO.setIID(item.getIID());
+                itemVO.setItem(item.getItem());
+                itemVO.setCategory(item.getCategory());
+                itemVO.setContent(item.getContent());
+                itemVO.setPhoto(item.getPhoto());
+                itemVO.setNickName(item.getUser().getNickName());
+                itemVOList.add(itemVO);
+            }
+        }
+        return itemVOList;
+    }
+
+    @Transactional
+    @Override
+    public void deleteItem(Long iID) {
+        itemRepository.deleteById(iID);
     }
 }

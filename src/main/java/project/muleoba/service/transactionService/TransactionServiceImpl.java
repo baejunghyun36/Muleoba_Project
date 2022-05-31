@@ -45,7 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     public void deleteTransaction(Long tID) {
-        transactionRepository.delete(transactionRepository.findBytID(tID));
+        transactionRepository.deleteById(tID);
     }
 
     @Override
