@@ -13,11 +13,17 @@ public interface TransactionService {
 
     void save(Long IID, Long requestIID);
 
-    Transaction findTransaction(long tID);
+    Transaction findTransaction(Long tID);
 
     void deleteTransaction(Long tID);
 
     List<TransactionVO> transactionList(Long iID);
 
     void acceptRequest(Long iid, Long requestIID);
+
+    void completeRequest(Long iid, Long requestIID);
+
+    List<TransactionVO> completeRequestList(Long uID);
+
+    List<TransactionVO> requestMyItems(Long uID);
 }
