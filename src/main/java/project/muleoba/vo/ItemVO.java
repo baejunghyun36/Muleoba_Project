@@ -2,6 +2,8 @@ package project.muleoba.vo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -13,6 +15,8 @@ public class ItemVO {
     private String content;
     private String photo;
     private String nickName;
+    private Long requestNum;
+    private LocalDateTime uploadTime;
 
 
 }
