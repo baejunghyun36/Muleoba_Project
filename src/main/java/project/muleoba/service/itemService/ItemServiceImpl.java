@@ -102,32 +102,35 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public List<ItemVO> itemList() {
+    public List<ItemVO> itemList(String address) {
         List <Item> itemList = itemRepository.findAllOrder();
         List <ItemVO> itemVOList = new ArrayList<>();
         for (Item item : itemList) {
             entityManager.refresh(item);
-            ItemVO itemVO = new ItemVO();
-            itemVO.setIID(item.getIID());
-            itemVO.setItem(item.getItem());
-            itemVO.setRequestNum(item.getRequestNum());
-            itemVO.setCategory(item.getCategory());
-            itemVO.setContent(item.getContent());
-            itemVO.setPhoto(item.getPhoto());
-            itemVO.setUploadTime(item.getUploadTime());
-            itemVO.setNickName(item.getUser().getNickName());
-            itemVOList.add(itemVO);
+            if(item.getUser().getAddress().equals(address)){
+                ItemVO itemVO = new ItemVO();
+                itemVO.setIID(item.getIID());
+                itemVO.setItem(item.getItem());
+                itemVO.setRequestNum(item.getRequestNum());
+                itemVO.setCategory(item.getCategory());
+                itemVO.setContent(item.getContent());
+                itemVO.setPhoto(item.getPhoto());
+                itemVO.setUploadTime(item.getUploadTime());
+                itemVO.setNickName(item.getUser().getNickName());
+                itemVOList.add(itemVO);
+            }
+
         }
         return itemVOList;
     }
 
     @Override
-    public List<ItemVO> itemCategoryList(String category) {
+    public List<ItemVO> itemCategoryList(String category, String address) {
         List <Item> itemList = itemRepository.findAllOrder();
         List <ItemVO> itemVOList = new ArrayList<>();
         for (Item item : itemList) {
             entityManager.refresh(item);
-            if(item.getCategory().equals(category)){
+            if(item.getCategory().equals(category)&&item.getUser().getAddress().equals(address)){
                 ItemVO itemVO = new ItemVO();
                 itemVO.setIID(item.getIID());
                 itemVO.setItem(item.getItem());

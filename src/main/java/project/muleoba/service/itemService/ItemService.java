@@ -13,9 +13,9 @@ public interface ItemService {
 
     ItemVO detailItem(Long iID);
 
-    List<ItemVO> itemList();
+    List<ItemVO> itemList(String address);
 
-    List<ItemVO> itemCategoryList(String category);
+    List<ItemVO> itemCategoryList(String category, String address);
 
     void deleteItem(Long iID);
 }
