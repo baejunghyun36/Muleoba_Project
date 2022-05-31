@@ -1,13 +1,12 @@
 package project.muleoba.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.muleoba.form.itemForm;
 import project.muleoba.service.itemService.ItemService;
+import project.muleoba.vo.ItemVO;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -31,4 +30,25 @@ public class ItemController {
 
         return "ok";
     }
+
+    @PostMapping("/{iID}")//상세페이지
+    public ItemVO detailItem(@PathVariable("iID") Long iID) {
+        return itemService.detailItem(iID);
+    }
+
+    @PostMapping("/111")//최신순 정렬 (기본)
+    public List<ItemVO> itemList(){
+        return itemService.itemList();
+    }
+
+    @PostMapping("/222")//카테고리 정렬
+    public List<ItemVO> itemCategoryList(String category){
+        return itemService.itemCategoryList(category);
+    }
+
+    @PostMapping("/333")//삭제
+    public void deleteItem(Long iID){
+        itemService.deleteItem(iID);
+    }
+
 }
