@@ -37,11 +37,11 @@ public class ItemController {
         return itemService.detailItem(iID);
     }
 
-    @GetMapping("/mainList")//최신순 정렬 (기본)
-    public List<ItemVO> itemList(String category){
-        //User user = userService.find(uID);
-        //String address = user.getAddress;
-        String address = "서울특별시 영등포구";
+    @GetMapping("/muleoba/mainList")//최신순 정렬 (기본)
+    public List<ItemVO> itemList(Long uID, String category){
+        User user = userService.find(uID);
+        String address = user.getAddress;
+        //String address = "서울특별시 영등포구";
         if(category==null)return itemService.itemList(address);
         else return itemService.itemCategoryList(category, address);
     }
