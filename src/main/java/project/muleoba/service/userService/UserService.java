@@ -7,5 +7,7 @@ import project.muleoba.domain.User;
 @Service
 public interface UserService {
 
-    User findEmailUser(String email);
+    String saveUser(User user);
+    boolean findEmailUser(String email); // 이메일 중복체크
+    boolean findNickNameUser(String nickName); // 이메일 중복체크
 }
