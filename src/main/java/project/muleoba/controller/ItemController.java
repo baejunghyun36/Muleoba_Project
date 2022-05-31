@@ -3,6 +3,7 @@ package project.muleoba.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import project.muleoba.domain.User;
 import project.muleoba.form.itemForm;
 import project.muleoba.service.itemService.ItemService;
 import project.muleoba.vo.ItemVO;
@@ -38,8 +39,11 @@ public class ItemController {
 
     @GetMapping("/mainlist")//최신순 정렬 (기본)
     public List<ItemVO> itemList(String category){
-        if(category==null)return itemService.itemList();
-        else return itemService.itemCategoryList(category);
+        //User user = userService.find(uID);
+        //String address = user.getAddress;
+        String address = "서울특별시 영등포구";
+        if(category==null)return itemService.itemList(address);
+        else return itemService.itemCategoryList(category, address);
     }
 
     @PostMapping("/333")//삭제
