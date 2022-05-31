@@ -140,6 +140,7 @@ public class TransactionServiceImplTest {
     public void testCompleteRequestList(){
 
 
+        save();
         testCompleteRequest();
         List<TransactionVO> transactionVOList = transactionService.completeRequestList(1L); //사용자 uID
 
