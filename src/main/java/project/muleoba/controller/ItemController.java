@@ -1,6 +1,7 @@
 package project.muleoba.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.muleoba.domain.User;
@@ -11,8 +12,9 @@ import project.muleoba.vo.ItemVO;
 
 import java.util.List;
 
-@RestController("/mul")
+@RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
@@ -39,13 +41,16 @@ public class ItemController {
         return itemService.detailItem(iID);
     }
 
-    @GetMapping("/mainList")//최신순 정렬 (기본)
+    @GetMapping("/muleoba/mainList")//최신순 정렬 (기본)
     public List<ItemVO> itemList(Long uID, String category){
+        log.info("여기{}", uID);
+
         User user = userService.findByuID(uID);
         String address = user.getAddress();
 
         if(category==null)return itemService.itemList(address);
         else return itemService.itemCategoryList(category, address);
+
     }
 
     @PostMapping("/333")//삭제
