@@ -36,17 +36,17 @@ public class ItemController {
         return itemService.detailItem(iID);
     }
 
-    @PostMapping("/44")//최신순 정렬 (기본)
+    @PostMapping("/111")//최신순 정렬 (기본)
     public List<ItemVO> itemList(){
         return itemService.itemList();
     }
 
-    @PostMapping("/22")//카테고리 정렬
+    @PostMapping("/222")//카테고리 정렬
     public List<ItemVO> itemCategoryList(String category){
         return itemService.itemCategoryList(category);
     }
 
-    @PostMapping("/33")//삭제
+    @PostMapping("/333")//삭제
     public void deleteItem(Long iID){
         itemService.deleteItem(iID);
     }

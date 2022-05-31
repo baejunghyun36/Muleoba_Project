@@ -40,7 +40,6 @@ public class TransactionServiceImplTest {
     TransactionRepository transactionRepository;
 
 
-
     @Test
     @Transactional
     public void testTransaction() {
