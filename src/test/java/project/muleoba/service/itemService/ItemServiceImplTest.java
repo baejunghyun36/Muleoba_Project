@@ -66,8 +66,6 @@ public class ItemServiceImplTest {
         userRepository.save(user2);
 
         Item item = new Item();
-        LocalDateTime date = LocalDateTime.of(2021,12,25,1,15,20);
-        item.setUploadTime(date);
         item.setItem("의자");
         item.setCategory("가구");
         item.setPhoto("1");
@@ -152,7 +150,7 @@ public class ItemServiceImplTest {
 
     @Test
     public void mainListCategory(){
-        save();
+
         List<ItemVO> itemVOList = itemService.itemCategoryList("가구");
         for(ItemVO i : itemVOList){
             System.out.println("i.getPhoto() = " + i.getPhoto());
@@ -160,6 +158,7 @@ public class ItemServiceImplTest {
             System.out.println("i.getRequestNum() = " + i.getRequestNum());
             System.out.println("i.getItem() = " + i.getItem());
             System.out.println("i.getUploadTime() = " + i.getUploadTime());
+            System.out.println();
         }
         // itemService.itemCategoryList(category);
     }

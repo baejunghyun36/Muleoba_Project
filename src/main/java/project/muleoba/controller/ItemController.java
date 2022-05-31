@@ -38,7 +38,7 @@ public class ItemController {
 
     @GetMapping("/mainlist")//최신순 정렬 (기본)
     public List<ItemVO> itemList(String category){
-        if(category.equals(""))return itemService.itemList();
+        if(category==null)return itemService.itemList();
         else return itemService.itemCategoryList(category);
     }
 
