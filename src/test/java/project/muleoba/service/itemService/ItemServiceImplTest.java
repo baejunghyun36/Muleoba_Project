@@ -51,6 +51,7 @@ public class ItemServiceImplTest {
         user.setNickName("11");
         user.setPhoneNumber("11");
         user.setName("11");
+        user.setAddress("서울특별시 강남구");
 
 
         User user2 = new User();
@@ -61,6 +62,7 @@ public class ItemServiceImplTest {
         user2.setNickName("22");
         user2.setPhoneNumber("22");
         user2.setName("22");
+        user2.setAddress("서울특별시 영등포구");
 
         userRepository.save(user);
         userRepository.save(user2);
