@@ -4,23 +4,31 @@ package project.muleoba.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import project.muleoba.domain.User;
 import project.muleoba.service.userService.UserService;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/11")
-    public String findEmailUser(String email){
-       User user = userService.findEmailUser(email);
-       if(user == null){
-
-        return "사용자 없을 때 ";
-       }
-       return "사용자는 user ";
+    @PostMapping("/00") // 회원가입
+    public void saveUser(User user) {
+        userService.saveUser(user);
     }
+
+    @PostMapping("/11") // 이메일 중복여부 [중복없음:true]
+    public boolean findEmailUser(String email){
+       return userService.findEmailUser(email);
+    }
+
+    @PostMapping("/22") // 닉네임 중복여부 [중복없음:true]
+    public boolean findNickNameUser(String nickName) {
+        return userService.findNickNameUser(nickName);
+    }
+
+
 
 }
