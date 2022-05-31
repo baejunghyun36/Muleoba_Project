@@ -19,7 +19,7 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @PostMapping("/1") //본인 아이템, 상대방 아이템 거래 요청 저장.
+    @PostMapping("/1") //아이템, 상대방 아이템 거래 요청 저장.
     public void saveTransaction(Long IID, Long requestIID){
         //IID 본인 아이템, requestIID 상대방 아이템
         transactionService.save(IID, requestIID);
@@ -33,6 +33,7 @@ public class TransactionController {
     public void deleteTransaction(Long tID){
         transactionService.deleteTransaction(tID);
     }
+
     @PostMapping("/4")//특정 아이템에 교환 신청한 리스트
     public List<TransactionVO> transactionList(Long iID){
         List<TransactionVO> transactionList = transactionService.transactionList(iID);
