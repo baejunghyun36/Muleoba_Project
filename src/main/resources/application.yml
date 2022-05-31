@@ -18,11 +18,11 @@ spring:
   jpa:
     # show-sql:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         # show_sql: true
-        format_sql: true
+        format_sql: false
 
 logging.level:
   org.hibernate.SQL: debug

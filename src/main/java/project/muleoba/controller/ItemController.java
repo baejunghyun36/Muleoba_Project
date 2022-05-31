@@ -36,14 +36,10 @@ public class ItemController {
         return itemService.detailItem(iID);
     }
 
-    @PostMapping("/111")//최신순 정렬 (기본)
-    public List<ItemVO> itemList(){
-        return itemService.itemList();
-    }
-
-    @PostMapping("/222")//카테고리 정렬
-    public List<ItemVO> itemCategoryList(String category){
-        return itemService.itemCategoryList(category);
+    @GetMapping("/mainlist")//최신순 정렬 (기본)
+    public List<ItemVO> itemList(String category){
+        if(category==null)return itemService.itemList();
+        else return itemService.itemCategoryList(category);
     }
 
     @PostMapping("/333")//삭제

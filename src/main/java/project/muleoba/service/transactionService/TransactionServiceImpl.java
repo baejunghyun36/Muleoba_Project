@@ -56,7 +56,8 @@ public class TransactionServiceImpl implements TransactionService {
             if(t.getItem().getIID()==iID) {
                 TransactionVO transactionVO = new TransactionVO();
                 transactionVO.setTID(t.getTID());
-                transactionVO.setAlarm(t.getAlarm());
+              //  transactionVO.setAlarm(t.getAlarm());
+                transactionVO.setRequestIID(t.getRequestIID());
                 transactionVO.setItem(t.getItem());
                 transactionVO.setRequestTime(t.getRequestTime());
                 transactionVO.setStatus(t.getStatus());
@@ -87,16 +88,18 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> transactionList = transactionRepository.findAll();
         List<TransactionVO> transactionVOList = new ArrayList<>();
         for(Transaction t : transactionList ){
+            entityManager.refresh(t);
             if(t.getStatus()==Status.Complete&&t.getItem().getUser().getUID()==uID) {
                 TransactionVO transactionVO = new TransactionVO();
                 transactionVO.setTID(t.getTID());
-                transactionVO.setAlarm(t.getAlarm());
+                transactionVO.setRequestIID(t.getRequestIID());
                 transactionVO.setItem(t.getItem());
                 transactionVO.setRequestTime(t.getRequestTime());
                 transactionVO.setStatus(t.getStatus());
                 transactionVOList.add(transactionVO);
             }
         }
+
         return transactionVOList;
     }
 
@@ -106,10 +109,11 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> transactionList = transactionRepository.findAll();
         List<TransactionVO> transactionVOList = new ArrayList<>();
         for(Transaction t : transactionList ){
+            entityManager.refresh(t);
             if(t.getStatus()==Status.Normal&&t.getItem().getUser().getUID()==uID) {
                 TransactionVO transactionVO = new TransactionVO();
                 transactionVO.setTID(t.getTID());
-                transactionVO.setAlarm(t.getAlarm());
+                transactionVO.setRequestIID(t.getRequestIID());
                 transactionVO.setItem(t.getItem());
                 transactionVO.setRequestTime(t.getRequestTime());
                 transactionVO.setStatus(t.getStatus());

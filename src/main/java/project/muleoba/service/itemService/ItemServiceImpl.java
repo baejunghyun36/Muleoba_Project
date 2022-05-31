@@ -11,6 +11,8 @@ import project.muleoba.repository.UserRepository;
 import project.muleoba.repository.ItemRepository;
 import project.muleoba.vo.ItemVO;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class ItemServiceImpl implements ItemService{
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
+    @PersistenceContext
+    EntityManager entityManager;
     @Override
     public void saveItem(String photo, String itemName, String category, String content) {
         Item item = new Item();
@@ -102,12 +106,15 @@ public class ItemServiceImpl implements ItemService{
         List <Item> itemList = itemRepository.findAllOrder();
         List <ItemVO> itemVOList = new ArrayList<>();
         for (Item item : itemList) {
+            entityManager.refresh(item);
             ItemVO itemVO = new ItemVO();
             itemVO.setIID(item.getIID());
             itemVO.setItem(item.getItem());
+            itemVO.setRequestNum(item.getRequestNum());
             itemVO.setCategory(item.getCategory());
             itemVO.setContent(item.getContent());
             itemVO.setPhoto(item.getPhoto());
+            itemVO.setUploadTime(item.getUploadTime());
             itemVO.setNickName(item.getUser().getNickName());
             itemVOList.add(itemVO);
         }
@@ -119,14 +126,17 @@ public class ItemServiceImpl implements ItemService{
         List <Item> itemList = itemRepository.findAllOrder();
         List <ItemVO> itemVOList = new ArrayList<>();
         for (Item item : itemList) {
+            entityManager.refresh(item);
             if(item.getCategory().equals(category)){
                 ItemVO itemVO = new ItemVO();
                 itemVO.setIID(item.getIID());
                 itemVO.setItem(item.getItem());
+                itemVO.setRequestNum(item.getRequestNum());
                 itemVO.setCategory(item.getCategory());
                 itemVO.setContent(item.getContent());
                 itemVO.setPhoto(item.getPhoto());
                 itemVO.setNickName(item.getUser().getNickName());
+                itemVO.setUploadTime(item.getUploadTime());
                 itemVOList.add(itemVO);
             }
         }
