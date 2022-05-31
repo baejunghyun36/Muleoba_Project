@@ -11,7 +11,7 @@ import project.muleoba.vo.ItemVO;
 
 import java.util.List;
 
-@RestController
+@RestController("/mul")
 @RequiredArgsConstructor
 public class ItemController {
 
@@ -39,7 +39,7 @@ public class ItemController {
         return itemService.detailItem(iID);
     }
 
-    @GetMapping("/mainlist")//최신순 정렬 (기본)
+    @GetMapping("/mainList")//최신순 정렬 (기본)
     public List<ItemVO> itemList(Long uID, String category){
         User user = userService.findByuID(uID);
         String address = user.getAddress();
