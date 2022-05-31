@@ -40,6 +40,10 @@ public class UserServiceImpl implements UserService{
         return userRepository.findNickNameUser(nickName) == null;
     }
 
+    @Override
+    public User findByuID(Long uID) {
+        return userRepository.findByuID(uID);
+    }
 
 
 }

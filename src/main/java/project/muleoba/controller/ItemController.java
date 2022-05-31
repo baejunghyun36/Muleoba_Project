@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import project.muleoba.domain.User;
 import project.muleoba.form.itemForm;
 import project.muleoba.service.itemService.ItemService;
+import project.muleoba.service.userService.UserService;
 import project.muleoba.vo.ItemVO;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final UserService userService;
 
     @PostMapping("/uploadItem")
     public String uploadItem(@RequestPart("photo") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
@@ -37,11 +39,11 @@ public class ItemController {
         return itemService.detailItem(iID);
     }
 
-    @GetMapping("/muleoba/mainList")//최신순 정렬 (기본)
+    @GetMapping("/mainlist")//최신순 정렬 (기본)
     public List<ItemVO> itemList(Long uID, String category){
-        User user = userService.find(uID);
-        String address = user.getAddress;
-        //String address = "서울특별시 영등포구";
+        User user = userService.findByuID(uID);
+        String address = user.getAddress();
+
         if(category==null)return itemService.itemList(address);
         else return itemService.itemCategoryList(category, address);
     }
