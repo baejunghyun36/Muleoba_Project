@@ -17,6 +17,7 @@ public class ItemVO {
     private String nickName;
     private Long requestNum;
     private LocalDateTime uploadTime;
+    private String address;
 
 
 }
