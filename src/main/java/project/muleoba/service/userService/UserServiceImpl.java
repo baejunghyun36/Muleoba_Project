@@ -2,12 +2,10 @@ package project.muleoba.service.userService;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.muleoba.domain.User;
 import project.muleoba.repository.UserRepository;
-import project.muleoba.token.TokenService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,8 +18,6 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
 
-    @Autowired
-    TokenService tokenService;
     @PersistenceContext
     private EntityManager em;
 
@@ -57,11 +53,6 @@ public class UserServiceImpl implements UserService{
             return user.getUID(); // 로그인 성공
         }
         return 0L; // 로그인 실패
-    }
-
-    @Override
-    public String getToken() {
-        return this.token;
     }
 
     @Override
