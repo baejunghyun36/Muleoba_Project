@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import project.muleoba.domain.Item;
+import project.muleoba.domain.Status;
 import project.muleoba.domain.User;
 import project.muleoba.repository.UserRepository;
 import project.muleoba.repository.ItemRepository;
@@ -21,7 +22,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ItemServiceImpl implements ItemService{
+public class ItemServiceImpl implements  ItemService{
 
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
@@ -152,5 +153,52 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public void deleteItem(Long iID) {
         itemRepository.deleteById(iID);
+    }
+
+
+    @Override
+    public List<ItemVO> itemMyList(Long uID, String address) {
+
+        List<Item> itemList = userRepository.itemMyList(uID);
+        List<ItemVO> itemVOList = new ArrayList<>();
+        for(Item item : itemList){
+            entityManager.refresh(item);
+            ItemVO itemVO = new ItemVO();
+            itemVO.setIID(item.getIID());
+            itemVO.setItem(item.getItem());
+            itemVO.setRequestNum(item.getRequestNum());
+            itemVO.setCategory(item.getCategory());
+            itemVO.setContent(item.getContent());
+            itemVO.setAddress(address);
+            itemVO.setPhoto(item.getPhoto());
+            itemVO.setNickName(item.getUser().getNickName());
+            itemVO.setUploadTime(item.getUploadTime());
+            itemVOList.add(itemVO);
+        }
+        return itemVOList;
+    }
+
+    @Override
+    public List<ItemVO> itemSuccessList(Long uID, String address) {
+
+        List<Item> itemList = userRepository.itemMyList(uID);
+        List<ItemVO> itemVOList = new ArrayList<>();
+        for (Item item : itemList) {
+            entityManager.refresh(item);
+            if(item.getUser().getUID()==uID&&item.getStatus()==Status.Complete){
+                ItemVO itemVO = new ItemVO();
+                itemVO.setIID(item.getIID());
+                itemVO.setItem(item.getItem());
+                itemVO.setRequestNum(item.getRequestNum());
+                itemVO.setCategory(item.getCategory());
+                itemVO.setContent(item.getContent());
+                itemVO.setAddress(address);
+                itemVO.setPhoto(item.getPhoto());
+                itemVO.setNickName(item.getUser().getNickName());
+                itemVO.setUploadTime(item.getUploadTime());
+                itemVOList.add(itemVO);
+            }
+        }
+        return itemVOList;
     }
 }

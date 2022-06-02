@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import project.muleoba.domain.Item;
 import project.muleoba.domain.Transaction;
 import project.muleoba.domain.User;
 
@@ -25,4 +26,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u.nickName from User u order by u.completeCnt desc  ")
     List<String> findBestUsers();
+
+    @Query("select i from Item i where i.user.uID = :uID order by i.uploadTime desc")
+    List<Item> itemMyList(@Param("uID") Long uID);
 }
