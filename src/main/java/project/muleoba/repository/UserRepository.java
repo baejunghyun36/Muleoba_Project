@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import project.muleoba.domain.Transaction;
 import project.muleoba.domain.User;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -21,4 +23,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.nickName = :nickName")
     User findNickNameUser(@Param("nickName") String nickName);
 
+    @Query("select u.nickName from User u order by u.completeCnt desc  ")
+    List<String> findBestUsers();
 }
