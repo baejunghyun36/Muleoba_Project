@@ -30,6 +30,9 @@ public class User {
     private String name;
 
     @NotNull
+    private Long completeCnt;
+
+    @NotNull
     private String password;
 
     @NotNull
