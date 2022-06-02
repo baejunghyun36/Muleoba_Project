@@ -53,6 +53,20 @@ public class ItemController {
 
     }
 
+
+    @GetMapping("/muleoba/mylist")//최신순 정렬 (기본)
+    public List<ItemVO> itemMyList(Long uID){
+        User user = userService.findByuID(uID);
+        return itemService.itemMyList(uID, user.getAddress());
+    }
+
+    @GetMapping("/muleoba/successlist")
+    public List<ItemVO> itemSuccessList(Long uID){
+        return itemService.itemSuccessList(uID, userService.findByuID(uID).getAddress());
+
+    }
+
+
     @PostMapping("/333")//삭제
     public void deleteItem(Long iID){
         itemService.deleteItem(iID);

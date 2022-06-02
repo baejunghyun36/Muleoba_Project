@@ -164,4 +164,37 @@ public class ItemServiceImplTest {
         }
         // itemService.itemCategoryList(category);
     }
+
+    @Test
+    public void mylist(){
+
+
+        List<ItemVO> itemVOList = itemService.itemMyList(1L, "서울특별시 강남구");
+        for(ItemVO i : itemVOList){
+            System.out.println("i.getPhoto() = " + i.getPhoto());
+            System.out.println("i.getCategory() = " + i.getCategory());
+            System.out.println("i.getRequestNum() = " + i.getRequestNum());
+            System.out.println("i.getItem() = " + i.getItem());
+            System.out.println("i.getUploadTime() = " + i.getUploadTime());
+            System.out.println();
+        }
+        // itemService.itemCategoryList(category);
+    }
+
+    @Test
+    public void successlist(){
+
+        List<ItemVO> itemVOList = itemService.itemSuccessList(1L, "서울특별시 강남구");
+        for(ItemVO i : itemVOList){
+            System.out.println("i.getPhoto() = " + i.getPhoto());
+            System.out.println("i.getCategory() = " + i.getCategory());
+            System.out.println("i.getRequestNum() = " + i.getRequestNum());
+            System.out.println("i.getItem() = " + i.getItem());
+            System.out.println("i.getUploadTime() = " + i.getUploadTime());
+            System.out.println();
+        }
+        // itemService.itemCategoryList(category);
+    }
+
+
 }

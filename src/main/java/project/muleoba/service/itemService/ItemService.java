@@ -18,4 +18,8 @@ public interface ItemService {
     List<ItemVO> itemCategoryList(String category, String address);
 
     void deleteItem(Long iID);
+
+    List<ItemVO> itemMyList(Long uID, String address);
+
+    List<ItemVO> itemSuccessList(Long uID, String address);
 }
