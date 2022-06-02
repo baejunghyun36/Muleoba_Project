@@ -9,6 +9,8 @@ import project.muleoba.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -45,5 +47,16 @@ public class UserServiceImpl implements UserService{
         return userRepository.findByuID(uID);
     }
 
-
+    @Override
+    public List<String> findBestUsers() {
+        List<String> bestUsers = userRepository.findBestUsers();
+        List<String> result = new ArrayList<>();
+        int cnt =0; 
+        for(String s : bestUsers){
+            result.add(s);
+            cnt++; 
+            if(cnt==5)break; 
+        }
+        return result; 
+    }
 }
