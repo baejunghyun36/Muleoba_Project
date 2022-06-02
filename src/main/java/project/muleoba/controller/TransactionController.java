@@ -4,6 +4,7 @@ package project.muleoba.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.muleoba.domain.Transaction;
@@ -48,9 +49,12 @@ public class TransactionController {
     public void completeRequest(Long IID, Long requestIID){
         transactionService.completeRequest(IID, requestIID);
     }
-    @PostMapping("/7")//마이페이지에서 내가 올린 물품 거래 완료된 데이터 리스트
-    public List<TransactionVO> completeRequestList(){
-        List<TransactionVO> transactionVOList = transactionService.completeRequestList(1L); //사용자 uID
+
+
+    @GetMapping("/7")//마이페이지에서 내가 올린 물품 거래 완료된 데이터 리스트
+    public List<TransactionVO> completeRequestList(Long uID){
+        List<TransactionVO> transactionVOList = transactionService.completeRequestList(uID); //사용자 uID
+
         return transactionVOList;
     }
     @PostMapping("/8") //내가 교환신청한 물품들
