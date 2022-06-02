@@ -11,8 +11,6 @@ import project.muleoba.token.TokenService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -51,14 +49,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public int loginUser(String email, String password) {
+    public Long loginUser(String email, String password) {
         User user = userRepository.userLogin(email, password);
         if ( user != null ) {
-            token = TokenService.createToken(user.getUID(), (120*1000*60));
-            System.out.println(token);
-            return 1; // 로그인 성공
+            return user.getUID(); // 로그인 성공
         }
-        return 0; // 로그인 실패
+        return 0L; // 로그인 실패
     }
 
     @Override
