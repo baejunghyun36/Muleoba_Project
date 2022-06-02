@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.muleoba.domain.User;
 import project.muleoba.repository.UserRepository;
+import project.muleoba.vo.UserVO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

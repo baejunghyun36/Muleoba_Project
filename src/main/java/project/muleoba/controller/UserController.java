@@ -3,11 +3,10 @@ package project.muleoba.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.muleoba.domain.User;
 import project.muleoba.service.userService.UserService;
+import project.muleoba.vo.UserVO;
 
 import java.util.List;
 
@@ -18,7 +17,14 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/muleoba/signup") // 회원가입 [ 로그인성공 : 1, 로그인실패 : 0 ]
-    public int saveUser(User user) {
+    public int saveUser(UserVO vo) {
+        User user = new User();
+        user.setEmail(vo.getEmail());
+        user.setNickName(vo.getNickName());
+        user.setPhoneNumber(vo.getPhoneNumber());
+        user.setName(vo.getName());
+        user.setPassword(vo.getPassword());
+        user.setAddress(vo.getAddress());
         return userService.saveUser(user);
     }
 
@@ -38,8 +44,9 @@ public class UserController {
     }
 
     @GetMapping("/muleoba/user")
-    public User findUserUID(long uID) {
-        return userService.findByuID(uID);
+    public UserVO findUserUID(long uID) {
+        User user = userService.findByuID(uID);
+        return new UserVO(user);
     }
 
     @GetMapping("/muleoba/bestuser")
