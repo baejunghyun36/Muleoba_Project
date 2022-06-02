@@ -52,9 +52,6 @@ public class UserServiceImplTest {
         int n = userService.saveUser(user);
         int n2 = userService.saveUser(user2);
         //int n3 = userService.loginUser("joseyun94@naver.com","1q2w3e4r");
-        
-        String findEmail = userService.saveUser(user);
-        String findEmail2 = userService.saveUser(user2);
 
         //then
         assertThat("spring").isEqualTo("spring");

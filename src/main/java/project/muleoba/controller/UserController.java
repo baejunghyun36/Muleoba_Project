@@ -3,10 +3,13 @@ package project.muleoba.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.muleoba.domain.User;
 import project.muleoba.service.userService.UserService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,7 +17,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/signup") // 회원가입 [ 로그인성공 : 1, 로그인실패 : 0 ]
+    @PostMapping("/muleoba/signup") // 회원가입 [ 로그인성공 : 1, 로그인실패 : 0 ]
     public int saveUser(User user) {
         return userService.saveUser(user);
     }

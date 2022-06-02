@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import project.muleoba.domain.Transaction;
 import project.muleoba.domain.User;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
