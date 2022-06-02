@@ -4,6 +4,8 @@ package project.muleoba.service.userService;
 import org.springframework.stereotype.Service;
 import project.muleoba.domain.User;
 
+import java.util.List;
+
 @Service
 public interface UserService {
 
@@ -14,4 +16,6 @@ public interface UserService {
     public String getToken(); // 토큰가져오기
 
     User findByuID(Long uID);
+
+    List<String> findBestUsers();
 }
