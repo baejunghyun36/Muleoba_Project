@@ -4,6 +4,8 @@ package project.muleoba.service.userService;
 import org.springframework.stereotype.Service;
 import project.muleoba.domain.User;
 
+import java.util.List;
+
 @Service
 public interface UserService {
 
@@ -12,4 +14,6 @@ public interface UserService {
     boolean findNickNameUser(String nickName); // 이메일 중복체크
 
     User findByuID(Long uID);
+
+    List<String> findBestUsers();
 }

@@ -3,10 +3,13 @@ package project.muleoba.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.muleoba.domain.User;
 import project.muleoba.service.userService.UserService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +32,9 @@ public class UserController {
         return userService.findNickNameUser(nickName);
     }
 
-
+    @GetMapping("/muleoba/bestuser")
+    public List<String> bestUser(){
+        return userService.findBestUsers();
+    }
 
 }
