@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.muleoba.domain.User;
 import project.muleoba.service.userService.UserService;
+import project.muleoba.vo.UserVO;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/muleoba/user")
-    public User findUserUID(long uID) {
+    public UserVO findUserUID(long uID) {
         return userService.findByuID(uID);
     }
 
