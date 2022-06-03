@@ -30,6 +30,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u.nickName from User u order by u.completeCnt desc  ")
     List<String> findBestUsers();
 
-    @Query("select i from Item i where i.user.uID = :uID order by i.uploadTime desc")
+    @Query("select i from Item i where i.user.uID = :uID and i.status <> 'Complete' order by i.uploadTime desc")
     List<Item> itemMyList(@Param("uID") Long uID);
+
+    @Query("select i from Item i where i.user.uID = :uID order by i.uploadTime desc")
+    List<Item> itemSuccessList(@Param("uID") Long uID);
+
 }
