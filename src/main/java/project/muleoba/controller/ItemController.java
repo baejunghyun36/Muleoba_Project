@@ -66,9 +66,20 @@ public class ItemController {
 
     }
 
+    @GetMapping("/muleoba/requestid")
+    public List<ItemVO> requestid(Long uID){
+        return itemService.myItemRequestIId(uID);
+    }
+
+    @GetMapping("/muleoba/requestitem")
+    public List<ItemVO> requestitem(Long uID){
+        return itemService.requestitem(uID);
+    }
+
 
     @PostMapping("/333")//삭제
-    public void deleteItem(Long iID){
+    public void deleteItem(Long iID) {
+
         itemService.deleteItem(iID);
     }
 

@@ -196,5 +196,27 @@ public class ItemServiceImplTest {
         // itemService.itemCategoryList(category);
     }
 
-
+    @Test
+    public void myItemRequestIId(){
+        List<ItemVO> itemVOList= itemService.myItemRequestIId(1L);
+        for(ItemVO i : itemVOList){
+            System.out.println("i.getIID() = " + i.getIID());
+            System.out.println("i.getItem() = " + i.getItem());
+            System.out.println("i.getAddress() = " + i.getAddress());
+            System.out.println("i.getRequestiID() = " + i.getRequestiID());
+            System.out.println("i.time() = " + i.getUploadTime());
+            System.out.println();
+        }
+    }
+    @Test
+    public void requestitem(){
+        List<ItemVO> itemVOList= itemService.requestitem(1L);
+        for(ItemVO i : itemVOList){
+            System.out.println("i.getIID() = " + i.getIID());
+            System.out.println("i.getItem() = " + i.getItem());
+            System.out.println("i.getAddress() = " + i.getAddress());
+            System.out.println("i.time() = " + i.getUploadTime());
+            System.out.println();
+        }
+    }
 }
