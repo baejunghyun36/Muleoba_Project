@@ -23,4 +23,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query("select i from Item i order by i.uploadTime desc")
     List<Item> findAllOrder();
+
+    @Query("select i.iID from Item i where i.user.uID = :uID")
+    List<Long> findByiIDList(Long uID);
 }
