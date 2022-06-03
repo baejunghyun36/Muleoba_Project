@@ -22,4 +22,8 @@ public interface ItemService {
     List<ItemVO> itemMyList(Long uID, String address);
 
     List<ItemVO> itemSuccessList(Long uID, String address);
+
+    List<ItemVO> myItemRequestIId(Long uID);
+
+    List<ItemVO> requestItem(Long uID);
 }
