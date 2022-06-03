@@ -26,4 +26,6 @@ public interface ItemService {
     List<ItemVO> myItemRequestIId(Long uID);
 
     List<ItemVO> requestItem(Long uID);
+
+    List<ItemVO> searchItem(String searchString, Long uID);
 }

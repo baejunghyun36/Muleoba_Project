@@ -251,4 +251,29 @@ public class ItemServiceImpl implements  ItemService{
         }
         return itemVOList;
     }
+
+    @Override
+    public List<ItemVO> searchItem(String searchString, Long uID) {
+
+        List <Item> itemList = itemRepository.findAllOrder();
+        List <ItemVO> itemVOList = new ArrayList<>();
+        String address = userRepository.findByuID(uID).getAddress();
+        for (Item item : itemList) {
+            entityManager.refresh(item);
+            if(item.getUser().getAddress().equals(address)&&item.getItem().contains(searchString)){
+                ItemVO itemVO = new ItemVO();
+                itemVO.setIID(item.getIID());
+                itemVO.setItem(item.getItem());
+                itemVO.setRequestNum(item.getRequestNum());
+                itemVO.setCategory(item.getCategory());
+                itemVO.setContent(item.getContent());
+                itemVO.setAddress(address);
+                itemVO.setPhoto(item.getPhoto());
+                itemVO.setUploadTime(item.getUploadTime());
+                itemVO.setNickName(item.getUser().getNickName());
+                itemVOList.add(itemVO);
+            }
+        }
+        return itemVOList;
+    }
 }

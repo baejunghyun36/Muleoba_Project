@@ -79,7 +79,12 @@ public class ItemController {
 
     @PostMapping("/muleoba/searchitem")
     public List<ItemVO> searchitem (@RequestBody Map<String, String> map){
-        map
+        String searchString = map.get("searchString");
+        String uID = map.get("uID");
+
+        return itemService.searchItem(searchString, Long.parseLong(uID));
+
+
     }
 
     @PostMapping("/333")//삭제
