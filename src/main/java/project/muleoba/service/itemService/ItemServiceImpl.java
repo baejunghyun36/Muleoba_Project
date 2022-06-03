@@ -186,7 +186,7 @@ public class ItemServiceImpl implements  ItemService{
     @Override
     public List<ItemVO> itemSuccessList(Long uID, String address) {
 
-        List<Item> itemList = userRepository.itemMyList(uID);
+        List<Item> itemList = userRepository.itemSuccessList(uID);
         List<ItemVO> itemVOList = new ArrayList<>();
         for (Item item : itemList) {
             entityManager.refresh(item);
