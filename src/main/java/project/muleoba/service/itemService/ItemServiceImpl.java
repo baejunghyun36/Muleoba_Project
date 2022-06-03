@@ -227,7 +227,6 @@ public class ItemServiceImpl implements  ItemService{
             itemVOList.add(itemVO);
         }
         return itemVOList;
-
     }
 
     @Override
@@ -245,6 +244,7 @@ public class ItemServiceImpl implements  ItemService{
             itemVO.setAddress(item.getUser().getAddress());
             itemVO.setPhoto(item.getPhoto());
             itemVO.setNickName(item.getUser().getNickName());
+            itemVO.setRequestiID(t.getRequestIID());
             itemVO.setUploadTime(t.getRequestTime());
             itemVOList.add(itemVO);
         }

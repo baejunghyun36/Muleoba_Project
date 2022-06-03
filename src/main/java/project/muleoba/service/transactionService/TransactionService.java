@@ -15,7 +15,7 @@ public interface TransactionService {
 
     Transaction findTransaction(Long tID);
 
-    void deleteTransaction(Long tID);
+    void deleteTransaction(Long requestiID, Long iID);
 
     List<TransactionVO> transactionList(Long iID);
 

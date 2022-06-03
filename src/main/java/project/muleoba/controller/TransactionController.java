@@ -30,9 +30,10 @@ public class TransactionController {
         Transaction transaction = transactionService.findTransaction(tID);
         return transaction;
     }
-    @PostMapping("/3") //거래삭제
-    public void deleteTransaction(Long tID){
-        transactionService.deleteTransaction(tID);
+
+    @PostMapping("/muleoba/requestcancel") //거래삭제
+    public void deleteTransaction(Long requestiID, Long iID){
+        transactionService.deleteTransaction(requestiID, iID);
     }
 
     @PostMapping("/4")//특정 아이템에 교환 신청한 리스트

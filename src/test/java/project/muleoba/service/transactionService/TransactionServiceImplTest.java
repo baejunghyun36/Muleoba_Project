@@ -110,7 +110,7 @@ public class TransactionServiceImplTest {
 
         transactionService.save(1L, 2L);
         transactionService.save(3L, 4L);
-        transactionService.deleteTransaction(1L);
+        transactionService.deleteTransaction(1L, 1L);
     }
 
 
