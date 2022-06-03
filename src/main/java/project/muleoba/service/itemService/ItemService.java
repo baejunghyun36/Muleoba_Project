@@ -25,5 +25,5 @@ public interface ItemService {
 
     List<ItemVO> myItemRequestIId(Long uID);
 
-    List<ItemVO> requestitem(Long uID);
+    List<ItemVO> requestItem(Long uID);
 }

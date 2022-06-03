@@ -72,8 +72,8 @@ public class ItemController {
     }
 
     @GetMapping("/muleoba/requestitem")
-    public List<ItemVO> requestitem(Long uID){
-        return itemService.requestitem(uID);
+    public List<ItemVO> requestItem(Long uID){
+        return itemService.requestItem(uID);
     }
 
 

@@ -209,8 +209,8 @@ public class ItemServiceImplTest {
         }
     }
     @Test
-    public void requestitem(){
-        List<ItemVO> itemVOList= itemService.requestitem(1L);
+    public void requestItem(){
+        List<ItemVO> itemVOList= itemService.requestItem(1L);
         for(ItemVO i : itemVOList){
             System.out.println("i.getIID() = " + i.getIID());
             System.out.println("i.getItem() = " + i.getItem());

@@ -231,7 +231,7 @@ public class ItemServiceImpl implements  ItemService{
     }
 
     @Override
-    public List<ItemVO> requestitem(Long uID) {
+    public List<ItemVO> requestItem(Long uID) {
         List <Transaction> transactionList = transactionRepository.findAllDateDesc(uID);
         List<ItemVO> itemVOList = new ArrayList<>();
         for (Transaction t : transactionList) {
