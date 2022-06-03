@@ -13,7 +13,7 @@ import project.muleoba.vo.TransactionVO;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class TransactionController {
