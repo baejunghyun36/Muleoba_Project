@@ -53,14 +53,14 @@ public class ItemController {
 
     @PostMapping("/muleoba/updateItem")
     public String updateItem(@RequestPart("photo") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
-        System.out.println(data.getIID());
+        System.out.println(data.getItemID());
 
-        //이미지 안들어올때 처리해야함...
-//        Item item = itemService.findByIID(Long.parseLong(data.getIID()));
-//        item.setPhoto(itemService.filePath(photo));
-//        item.setItem(data.getItemName());
-//        item.setCategory(data.getCategory());
-//        item.setContent(data.getContent());
+        if(photo == null){
+            itemService.updateItem(Long.parseLong(data.getItemID()), null, data.getItemName(), data.getCategory(), data.getContent());
+        }
+        else {
+            itemService.updateItem(Long.parseLong(data.getItemID()), itemService.filePath(photo), data.getItemName(), data.getCategory(), data.getContent());
+        }
 
         return "ok";
     }
