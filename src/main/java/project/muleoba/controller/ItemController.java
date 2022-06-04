@@ -39,7 +39,7 @@ public class ItemController {
         return "ok";
     }
 
-    @PostMapping("/muleoba/getItem")
+    @GetMapping("/muleoba/getItem")
     public ItemVO getItem(@RequestParam("iID") String iID){
         Item item = itemService.findByIID(Long.parseLong(iID));
         ItemVO itemVO = new ItemVO();
@@ -53,15 +53,15 @@ public class ItemController {
     }
 
     @PostMapping("/muleoba/updateItem")
-    public String updateItem(@RequestPart("photo") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
-        System.out.println(data.getIID());
+    public String updateItem(@RequestPart("files") List<MultipartFile> photo,@RequestPart("data") itemForm data) throws Exception{
+        System.out.println(data.getItemID());
 
         //이미지 안들어올때 처리해야함...
-//        Item item = itemService.findByIID(Long.parseLong(data.getIID()));
-//        item.setPhoto(itemService.filePath(photo));
-//        item.setItem(data.getItemName());
-//        item.setCategory(data.getCategory());
-//        item.setContent(data.getContent());
+        Item item = itemService.findByIID(Long.parseLong(data.getItemID()));
+        item.setPhoto(itemService.filePath(photo));
+        item.setItem(data.getItemName());
+        item.setCategory(data.getCategory());
+        item.setContent(data.getContent());
 
         return "ok";
     }
