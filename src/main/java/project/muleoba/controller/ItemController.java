@@ -38,7 +38,7 @@ public class ItemController {
         return "ok";
     }
 
-    @PostMapping("/getItem")
+    @PostMapping("/muleoba/getItem")
     public ItemVO getItem(@RequestParam("iID") String iID){
         Item item = itemService.findByIID(Long.parseLong(iID));
         ItemVO itemVO = new ItemVO();
@@ -51,7 +51,7 @@ public class ItemController {
         return itemVO;
     }
 
-    @PostMapping("/updateItem")
+    @PostMapping("/muleoba/updateItem")
     public String updateItem(@RequestPart("photo") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
         System.out.println(data.getIID());
 
