@@ -3,6 +3,7 @@ package project.muleoba.domain;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class User {
 
     @NotNull
     private String name;
+
+    @ColumnDefault("0")
+    private Long completeCnt;
 
     @NotNull
     private String password;

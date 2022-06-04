@@ -8,16 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.bind.annotation.PostMapping;
 import project.muleoba.domain.Item;
+import project.muleoba.domain.Status;
 import project.muleoba.domain.Transaction;
 import project.muleoba.domain.User;
 import project.muleoba.repository.ItemRepository;
 import project.muleoba.repository.TransactionRepository;
 import project.muleoba.repository.UserRepository;
+import project.muleoba.vo.TransactionVO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,9 +40,13 @@ public class TransactionServiceImplTest {
     @Autowired
     TransactionService transactionService;
 
+    @Autowired
+    TransactionRepository transactionRepository;
+
+
     @Test
     @Transactional
-    public void testTransaction() {
+    public void save(){
         User user = new User();
         user.setAddress("11");
         user.setEmail("11");
@@ -46,6 +55,7 @@ public class TransactionServiceImplTest {
         user.setNickName("11");
         user.setPhoneNumber("11");
         user.setName("11");
+
 
         User user2 = new User();
         user2.setAddress("22");
@@ -74,9 +84,15 @@ public class TransactionServiceImplTest {
         itemRepository.save(item);
         itemRepository.save(item2);
 
-        System.out.println(item.getIID());
-        System.out.println(item2.getIID());
-        transactionService.save(item.getIID(), item2.getIID());
+        transactionService.save(1L, 2L);
+    }
+
+
+    @Test
+    @Transactional
+    public void testTransaction() {
+        transactionService.save(1L, 2L);
+
         Transaction t = transactionService.findTransaction(1L);
         System.out.println(t.getTID());
 
@@ -86,17 +102,71 @@ public class TransactionServiceImplTest {
         System.out.println("게시물 아이템 글쓴이 : " + t.getItem().getUser().getUID());
         System.out.println("현재 거래 상태 : " + t.getStatus());
 
-/*        Assertions.assertThat(find.getName()).isEqualTo(user.getAddress());
-        Assertions.assertThat(findItem.getPhoto()).isEqualTo(item.getPhoto());*/
     }
 
     @Test
     @Transactional
     public void testTransactionDelete() { //거래 삭제 테스트
-        transactionService.save(3L, 4L);
+
         transactionService.save(1L, 2L);
         transactionService.save(3L, 4L);
-        transactionService.save(1L, 2L);
-        transactionService.deleteTransaction(1L);
+        transactionService.deleteTransaction(1L, 1L);
     }
+
+
+    @Test
+    @Transactional
+    public void testTransactionAcceptRequest(){ // @PostMapping("/5")  교환 수락 테스트
+
+        save();
+        transactionService.save(1L, 2L);
+        transactionService.acceptRequest(1L, 2L);
+        Transaction transaction = transactionRepository.findByiidRequestIID(1L, 2L);
+        Assertions.assertThat(transaction.getStatus()).isEqualTo(Status.Reservation);
+    }
+
+    @Test
+    @Transactional // @PostMapping("/6")교환 완료 로직
+    public void testCompleteRequest(){
+        save();
+        transactionService.completeRequest(1L, 2L);
+        Transaction transaction = transactionRepository.findByiidRequestIID(1L, 2L);
+        Assertions.assertThat(transaction.getStatus()).isEqualTo(Status.Complete);
+    }
+
+    @Test
+    @Transactional //@PostMapping("/7")마이페이지에서 내가 올린 물품 거래 완료된 데이터 리스트
+    public void testCompleteRequestList(){
+
+
+        save();
+        testCompleteRequest();
+        List<TransactionVO> transactionVOList = transactionService.completeRequestList(1L); //사용자 uID
+
+        for (TransactionVO t : transactionVOList) {
+            System.out.println("거래 TID : " + t.getTID());
+            System.out.println("요청 물품 IID : " + t.getRequestIID());
+            System.out.println("내 물품 IID = " + t.getItem().getIID());
+            System.out.println("t.getRequestTime() = " + t.getRequestTime());
+            System.out.println("t.getStatus() = " + t.getStatus());
+        }
+    }
+
+    @Test
+    @Transactional   //  @PostMapping("/8") 내가 교환신청한 물품들
+    public void testRequestMyItems(){
+
+        save();
+        List<TransactionVO> transactionVOList = transactionService.requestMyItems(1L);
+
+        for (TransactionVO t : transactionVOList) {
+            System.out.println("거래 TID : " + t.getTID());
+            System.out.println("요청 물품 IID : " + t.getRequestIID());
+            System.out.println("내 물품 IID = " + t.getItem().getIID());
+            System.out.println("t.getRequestTime() = " + t.getRequestTime());
+            System.out.println("t.getStatus() = " + t.getStatus());
+        }
+    }
+
+
 }

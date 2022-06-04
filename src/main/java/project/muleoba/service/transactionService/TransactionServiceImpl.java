@@ -3,8 +3,7 @@ package project.muleoba.service.transactionService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.muleoba.domain.Status;
-import project.muleoba.domain.Transaction;
+import project.muleoba.domain.*;
 import project.muleoba.repository.ItemRepository;
 import project.muleoba.repository.TransactionRepository;
 import project.muleoba.vo.TransactionVO;
@@ -36,7 +35,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction findTransaction(long tID) {
+    public Transaction findTransaction(Long tID) {
         Transaction t = transactionRepository.findBytID(tID);
         entityManager.refresh(t);
         return t;
@@ -44,8 +43,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public void deleteTransaction(Long tID) {
-        transactionRepository.delete(transactionRepository.findBytID(tID));
+    public void deleteTransaction(Long requestiID, Long iID) {
+        transactionRepository.deleteById(transactionRepository.findDeleteTID(requestiID, iID));
     }
 
     @Override
@@ -56,7 +55,8 @@ public class TransactionServiceImpl implements TransactionService {
             if(t.getItem().getIID()==iID) {
                 TransactionVO transactionVO = new TransactionVO();
                 transactionVO.setTID(t.getTID());
-                transactionVO.setAlarm(t.getAlarm());
+              //  transactionVO.setAlarm(t.getAlarm());
+                transactionVO.setRequestIID(t.getRequestIID());
                 transactionVO.setItem(t.getItem());
                 transactionVO.setRequestTime(t.getRequestTime());
                 transactionVO.setStatus(t.getStatus());
@@ -71,9 +71,55 @@ public class TransactionServiceImpl implements TransactionService {
     public void acceptRequest(Long iid, Long requestIID) {
         Transaction t = transactionRepository.findByiidRequestIID(iid, requestIID);
         t.setStatus(Status.Reservation);
+        transactionRepository.save(t);
+    }
 
+    @Override
+    public void completeRequest(Long iid, Long requestIID) {
+        Transaction t = transactionRepository.findByiidRequestIID(iid, requestIID);
+        t.setStatus(Status.Complete);
+        transactionRepository.save(t);
+    }
 
+    @Override
+    public List<TransactionVO> completeRequestList(Long uID) {
 
+        List<Transaction> transactionList = transactionRepository.findAll();
+        List<TransactionVO> transactionVOList = new ArrayList<>();
+        for(Transaction t : transactionList ){
+            entityManager.refresh(t);
+            if(t.getStatus()==Status.Complete&&t.getItem().getUser().getUID()==uID) {
+                TransactionVO transactionVO = new TransactionVO();
+                transactionVO.setTID(t.getTID());
+                transactionVO.setRequestIID(t.getRequestIID());
+                transactionVO.setItem(t.getItem());
+                transactionVO.setRequestTime(t.getRequestTime());
+                transactionVO.setStatus(t.getStatus());
+                transactionVOList.add(transactionVO);
+            }
+        }
+
+        return transactionVOList;
+    }
+
+    @Override
+    public List<TransactionVO> requestMyItems(Long uID) {
+
+        List<Transaction> transactionList = transactionRepository.findAll();
+        List<TransactionVO> transactionVOList = new ArrayList<>();
+        for(Transaction t : transactionList ){
+            entityManager.refresh(t);
+            if(t.getStatus()==Status.Normal&&t.getItem().getUser().getUID()==uID) {
+                TransactionVO transactionVO = new TransactionVO();
+                transactionVO.setTID(t.getTID());
+                transactionVO.setRequestIID(t.getRequestIID());
+                transactionVO.setItem(t.getItem());
+                transactionVO.setRequestTime(t.getRequestTime());
+                transactionVO.setStatus(t.getStatus());
+                transactionVOList.add(transactionVO);
+            }
+        }
+        return transactionVOList;
 
     }
 }

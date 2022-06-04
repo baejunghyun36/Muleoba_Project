@@ -1,25 +1,29 @@
 package project.muleoba.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.muleoba.domain.Item;
+import project.muleoba.domain.User;
 import project.muleoba.form.itemForm;
 import project.muleoba.service.itemService.ItemService;
 import project.muleoba.vo.ItemVO;
+import project.muleoba.service.userService.UserService;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
+    private final UserService userService;
 
-    @PostMapping("/uploadItem")
-    public String uploadItem(@RequestPart("photo") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
+    @PostMapping("/muleoba/uploadItem")
+    public String uploadItem(@RequestPart(value = "files", required = false) List<MultipartFile> photo,
+                             @RequestPart(value = "data", required = false) itemForm data) throws Exception{
         System.out.println("In controller");
         System.out.println(photo);
         for(MultipartFile p: photo){
@@ -60,4 +64,52 @@ public class ItemController {
 
         return "ok";
     }
+
+    @PostMapping("/{iID}")//상세페이지
+    public ItemVO detailItem(@PathVariable("iID") Long iID) {
+        return itemService.detailItem(iID);
+    }
+
+    @GetMapping("/muleoba/mainList")//최신순 정렬 (기본)
+    public List<ItemVO> itemList(Long uID, String category){
+        log.info("여기{}", uID);
+
+        User user = userService.findByuID(uID);
+        String address = user.getAddress();
+
+        if(category==null)return itemService.itemList(address);
+        else return itemService.itemCategoryList(category, address);
+
+    }
+
+
+    @GetMapping("/muleoba/mylist")//최신순 정렬 (기본)
+    public List<ItemVO> itemMyList(Long uID){
+        User user = userService.findByuID(uID);
+        return itemService.itemMyList(uID, user.getAddress());
+    }
+
+    @GetMapping("/muleoba/successlist")
+    public List<ItemVO> itemSuccessList(Long uID){
+        return itemService.itemSuccessList(uID, userService.findByuID(uID).getAddress());
+
+    }
+
+    @GetMapping("/muleoba/requestid")
+    public List<ItemVO> requestid(Long uID){
+        return itemService.myItemRequestIId(uID);
+    }
+
+    @GetMapping("/muleoba/requestitem")
+    public List<ItemVO> requestItem(Long uID){
+        return itemService.requestItem(uID);
+    }
+
+
+    @PostMapping("/333")//삭제
+    public void deleteItem(Long iID) {
+
+        itemService.deleteItem(iID);
+    }
+
 }

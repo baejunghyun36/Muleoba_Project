@@ -1,27 +1,39 @@
 package project.muleoba.service.itemService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import project.muleoba.domain.Item;
+import project.muleoba.domain.Status;
+import project.muleoba.domain.Transaction;
 import project.muleoba.domain.User;
+import project.muleoba.repository.TransactionRepository;
 import project.muleoba.repository.UserRepository;
 import project.muleoba.repository.ItemRepository;
+import project.muleoba.vo.ItemVO;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ItemServiceImpl implements ItemService{
+@Slf4j
+public class ItemServiceImpl implements  ItemService{
 
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
+    private final TransactionRepository transactionRepository;
+    @PersistenceContext
+    EntityManager entityManager;
     @Override
     public void saveItem(String photo, String itemName, String category, String content) {
         Item item = new Item();
@@ -85,5 +97,163 @@ public class ItemServiceImpl implements ItemService{
         }
 
         return photoRoute;
+    }
+
+    @Override
+    public ItemVO detailItem(Long iID) {
+        Item item = itemRepository.findByiID(iID);
+        ItemVO itemVO = new ItemVO();
+        itemVO.setItem(item.getItem());
+        itemVO.setIID(item.getIID());
+        itemVO.setCategory(item.getCategory());
+        itemVO.setContent(item.getContent());
+        itemVO.setPhoto(item.getPhoto());
+        itemVO.setNickName(item.getUser().getNickName());
+        return itemVO;
+    }
+
+    @Override
+    public List<ItemVO> itemList(String address) {
+        List <Item> itemList = itemRepository.findAllOrder();
+        List <ItemVO> itemVOList = new ArrayList<>();
+        for (Item item : itemList) {
+            entityManager.refresh(item);
+            if(item.getUser().getAddress().equals(address)){
+                ItemVO itemVO = new ItemVO();
+                itemVO.setIID(item.getIID());
+                itemVO.setItem(item.getItem());
+                itemVO.setRequestNum(item.getRequestNum());
+                itemVO.setCategory(item.getCategory());
+                itemVO.setContent(item.getContent());
+                itemVO.setAddress(address);
+                itemVO.setPhoto(item.getPhoto());
+                itemVO.setUploadTime(item.getUploadTime());
+                itemVO.setNickName(item.getUser().getNickName());
+                itemVOList.add(itemVO);
+            }
+
+        }
+        return itemVOList;
+    }
+
+    @Override
+    public List<ItemVO> itemCategoryList(String category, String address) {
+        List <Item> itemList = itemRepository.findAllOrder();
+        List <ItemVO> itemVOList = new ArrayList<>();
+        for (Item item : itemList) {
+            entityManager.refresh(item);
+            if(item.getCategory().equals(category)&&item.getUser().getAddress().equals(address)){
+                ItemVO itemVO = new ItemVO();
+                itemVO.setIID(item.getIID());
+                itemVO.setItem(item.getItem());
+                itemVO.setRequestNum(item.getRequestNum());
+                itemVO.setCategory(item.getCategory());
+                itemVO.setContent(item.getContent());
+                itemVO.setAddress(address);
+                itemVO.setPhoto(item.getPhoto());
+                itemVO.setNickName(item.getUser().getNickName());
+                itemVO.setUploadTime(item.getUploadTime());
+                itemVOList.add(itemVO);
+            }
+        }
+        return itemVOList;
+    }
+
+    @Transactional
+    @Override
+    public void deleteItem(Long iID) {
+        itemRepository.deleteById(iID);
+    }
+
+
+    @Override
+    public List<ItemVO> itemMyList(Long uID, String address) {
+
+        List<Item> itemList = userRepository.itemMyList(uID);
+        List<ItemVO> itemVOList = new ArrayList<>();
+        for(Item item : itemList){
+            entityManager.refresh(item);
+            ItemVO itemVO = new ItemVO();
+            itemVO.setIID(item.getIID());
+            itemVO.setItem(item.getItem());
+            itemVO.setRequestNum(item.getRequestNum());
+            itemVO.setCategory(item.getCategory());
+            itemVO.setContent(item.getContent());
+            itemVO.setAddress(address);
+            itemVO.setPhoto(item.getPhoto());
+            itemVO.setNickName(item.getUser().getNickName());
+            itemVO.setUploadTime(item.getUploadTime());
+            itemVOList.add(itemVO);
+        }
+        return itemVOList;
+    }
+
+    @Override
+    public List<ItemVO> itemSuccessList(Long uID, String address) {
+
+        List<Item> itemList = userRepository.itemSuccessList(uID);
+        List<ItemVO> itemVOList = new ArrayList<>();
+        for (Item item : itemList) {
+            entityManager.refresh(item);
+            if(item.getUser().getUID()==uID&&item.getStatus()==Status.Complete){
+                ItemVO itemVO = new ItemVO();
+                itemVO.setIID(item.getIID());
+                itemVO.setItem(item.getItem());
+                itemVO.setRequestNum(item.getRequestNum());
+                itemVO.setCategory(item.getCategory());
+                itemVO.setContent(item.getContent());
+                itemVO.setAddress(address);
+                itemVO.setPhoto(item.getPhoto());
+                itemVO.setNickName(item.getUser().getNickName());
+                itemVO.setUploadTime(item.getUploadTime());
+                itemVOList.add(itemVO);
+            }
+        }
+        return itemVOList;
+    }
+
+    @Override
+    public List<ItemVO> myItemRequestIId(Long uID) {
+       List <Transaction> transactionList = transactionRepository.findAllDateDesc(uID);
+       List<ItemVO> itemVOList = new ArrayList<>();
+        for (Transaction t : transactionList) {
+            Item item = itemRepository.findByiID(t.getRequestIID());
+            ItemVO itemVO = new ItemVO();
+            itemVO.setIID(item.getIID());
+            itemVO.setItem(item.getItem());
+            itemVO.setRequestNum(item.getRequestNum());
+            itemVO.setCategory(item.getCategory());
+            itemVO.setContent(item.getContent());
+            itemVO.setAddress(userRepository.findByuID(uID).getAddress());
+            itemVO.setPhoto(item.getPhoto());
+            itemVO.setNickName(item.getUser().getNickName());
+            itemVO.setUploadTime(t.getRequestTime());
+            itemVO.setRequestiID(t.getItem().getIID());
+            itemVOList.add(itemVO);
+        }
+        return itemVOList;
+    }
+
+    @Override
+    public List<ItemVO> requestItem(Long uID) {
+        List <Transaction> transactionList = transactionRepository.findAllDateDesc(uID);
+        List<ItemVO> itemVOList = new ArrayList<>();
+        for (Transaction t : transactionList) {
+            Item item = itemRepository.findByiID(t.getItem().getIID());
+            ItemVO itemVO = new ItemVO();
+            itemVO.setIID(item.getIID());
+            itemVO.setItem(item.getItem());
+            itemVO.setRequestNum(item.getRequestNum());
+            itemVO.setCategory(item.getCategory());
+            itemVO.setContent(item.getContent());
+            itemVO.setRequestiID(t.getRequestIID());
+            itemVO.setAddress(item.getUser().getAddress());
+            itemVO.setPhoto(item.getPhoto());
+            itemVO.setNickName(item.getUser().getNickName());
+            itemVO.setRequestiID(t.getRequestIID());
+            itemVO.setUploadTime(t.getRequestTime());
+            itemVOList.add(itemVO);
+        }
+        return itemVOList;
     }
 }

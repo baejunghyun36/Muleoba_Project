@@ -9,6 +9,8 @@ import project.muleoba.domain.Item;
 import project.muleoba.domain.Transaction;
 import project.muleoba.domain.User;
 
+import java.util.List;
+
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
@@ -19,5 +21,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Item findByiID(Long IID);
 
+    @Query("select i from Item i where i.status <> 'Complete' order by i.uploadTime desc")
+    List<Item> findAllOrder();
 
+    @Query("select i.iID from Item i where i.user.uID = :uID")
+    List<Long> findByiIDList(Long uID);
 }

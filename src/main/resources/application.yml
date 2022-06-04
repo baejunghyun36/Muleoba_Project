@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/muleobadb?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/Muleobadb?serverTimezone=Asia/Seoul
     username: root
-    password: mcys1309
+    password: 1234
 
   servlet:
     multipart:
@@ -22,8 +22,11 @@ spring:
     properties:
       hibernate:
         # show_sql: true
-        format_sql: true
+        format_sql: false
 
 logging.level:
   org.hibernate.SQL: debug
-# org.hibernate.type: trace
+  org.hibernate.type: trace
+
+
+
