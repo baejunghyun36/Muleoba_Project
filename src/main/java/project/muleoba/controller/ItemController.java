@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import project.muleoba.domain.User;
-import project.muleoba.form.itemForm;
+import project.muleoba.vo.itemForm;
 import project.muleoba.service.itemService.ItemService;
 import project.muleoba.service.userService.UserService;
 import project.muleoba.vo.ItemVO;
@@ -20,8 +21,9 @@ public class ItemController {
     private final ItemService itemService;
     private final UserService userService;
 
-    @PostMapping("/uploadItem")
-    public String uploadItem(@RequestPart("photo") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
+    @PostMapping("/muleoba/uploadItem")
+    public String uploadItem(@RequestPart(value = "files", required = false) List<MultipartFile> photo,
+                              @RequestPart(value = "data", required = false) itemForm data) throws Exception{
         System.out.println("In controller");
         System.out.println(photo);
         for(MultipartFile p: photo){
