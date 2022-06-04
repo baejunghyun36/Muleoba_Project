@@ -52,6 +52,11 @@ public class ItemServiceImpl implements  ItemService{
         itemRepository.save(item);
     }
 
+    @Override
+    public Item findByIID(Long iID){
+        return itemRepository.findByiID(iID);
+    }
+
     public String filePath(List<MultipartFile> images) throws Exception{
 
         String photoRoute = new String();

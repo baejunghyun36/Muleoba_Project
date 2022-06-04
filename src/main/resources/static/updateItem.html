@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>muleoba</title>
+    <title>Title</title>
 </head>
 <body>
 
@@ -10,6 +10,9 @@
     <div class="formBox">
         <div>
             <h2 class="title">아이템 등록</h2>
+        </div>
+
+        <div id="preview">
         </div>
 
         <div>
@@ -54,8 +57,33 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 
-    let formData = new FormData();
+    const preview = document.querySelector('#preview');
     const photo = document.querySelector('#photo');
+    const itemName = document.querySelector('#itemName');
+    const category = document.querySelector('#category');
+    const content = document.querySelector('#content');
+
+    $.ajax({
+        url: "/getItem",
+        type: "POST",
+        data: {
+            iID : "2"
+        },
+        success: function(data){
+            const photo = data.photo.split(" ");
+            for(let i=0; i<photo.length; i++){
+                let p = document.createElement("img");
+                p.setAttribute("src", photo[i]);
+                p.setAttribute("width", "200px");
+                preview.append(p);
+            }
+            itemName.setAttribute('value', data.item);
+            $("#category").val(data.category);
+            content.innerHTML = data.content;
+        },
+    });
+
+    let formData = new FormData();
     photo.addEventListener('change', (evt) => {
         let files = Array.from(photo.files);
         files.forEach(file => {
@@ -66,11 +94,6 @@
     const submitButton = document.querySelector('#submitButton');
     submitButton.addEventListener('click', function(evt){
         evt.preventDefault();
-
-        const photo = document.querySelector('#photo');
-        const itemName = document.querySelector('#itemName');
-        const category = document.querySelector('#category');
-        const content = document.querySelector('#content');
 
         if(!itemName.value){
             evt.preventDefault();
@@ -89,6 +112,7 @@
         }
         else{
             let data = {
+                iID : "2",
                 itemName: itemName.value,
                 category: category.value,
                 content: content.value
@@ -96,7 +120,7 @@
             formData.append('data', new Blob([JSON.stringify(data)], {type: "application/json"}));
             console.log('before ajax');
             $.ajax({
-                url: "/uploadItem",
+                url: "/updateItem",
                 type: "POST",
                 processData: false,
                 contentType: false,
