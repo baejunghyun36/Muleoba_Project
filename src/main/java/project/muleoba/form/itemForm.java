@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class itemForm {
 
-    private String iID;
+    private String itemID;
 
     private String itemName;
 
