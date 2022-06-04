@@ -2,6 +2,7 @@ package project.muleoba.service.userService;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.muleoba.domain.User;
@@ -13,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
@@ -37,6 +39,7 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional // 이메일 중복 확인
     public boolean findEmailUser(String email) {
+        log.info("123{}", email);
         return userRepository.findEmailUser(email) == null;
     }
 

@@ -17,12 +17,11 @@ public class UserVO {
     private String password;
     private String address;
 
-    public UserVO(){
-
-    }
+    public UserVO() {}
 
     // Long uID, String email, String nickName, String phoneNumber, String name, String password, String address
     public UserVO(User user) {
+        this.uID = user.getUID();
         this.email = user.getEmail();
         this.nickName = user.getNickName();
         this.phoneNumber = user.getPhoneNumber();

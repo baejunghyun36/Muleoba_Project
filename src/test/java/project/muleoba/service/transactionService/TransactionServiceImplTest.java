@@ -91,9 +91,8 @@ public class TransactionServiceImplTest {
     @Test
     @Transactional
     public void testTransaction() {
-        save();
-
         transactionService.save(1L, 2L);
+
         Transaction t = transactionService.findTransaction(1L);
         System.out.println(t.getTID());
 
@@ -111,7 +110,7 @@ public class TransactionServiceImplTest {
 
         transactionService.save(1L, 2L);
         transactionService.save(3L, 4L);
-        transactionService.deleteTransaction(1L);
+        transactionService.deleteTransaction(1L, 1L);
     }
 
 
@@ -168,4 +167,6 @@ public class TransactionServiceImplTest {
             System.out.println("t.getStatus() = " + t.getStatus());
         }
     }
+
+
 }

@@ -1,19 +1,20 @@
 package project.muleoba.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import project.muleoba.domain.User;
 import project.muleoba.service.userService.UserService;
 import project.muleoba.vo.UserVO;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@Slf4j
 @RequiredArgsConstructor
 public class UserController {
 
@@ -33,6 +34,7 @@ public class UserController {
 
     @GetMapping("/muleoba/check/email") // 이메일 중복여부 [중복없음:true]
     public boolean findEmailUser(String email){
+        System.out.println("[email!!] : " + email);
        return userService.findEmailUser(email);
     }
 
@@ -42,7 +44,9 @@ public class UserController {
     }
 
     @PostMapping("/muleoba/login") // 로그인
-    public Long userLogin(String email, String password) {
+    public Long userLogin(@RequestBody Map map) {
+        String email = String.valueOf(map.get("email"));
+        String password = String.valueOf(map.get("password"));
         return userService.loginUser(email, password);
     }
 

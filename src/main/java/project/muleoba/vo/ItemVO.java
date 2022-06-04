@@ -1,8 +1,9 @@
 package project.muleoba.vo;
+
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
+import project.muleoba.domain.Status;
 
 
 @Getter
@@ -18,6 +19,6 @@ public class ItemVO {
     private Long requestNum;
     private LocalDateTime uploadTime;
     private String address;
-
+    private Long requestiID;
 
 }

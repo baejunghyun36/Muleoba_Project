@@ -3,8 +3,7 @@ package project.muleoba.service.transactionService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.muleoba.domain.Status;
-import project.muleoba.domain.Transaction;
+import project.muleoba.domain.*;
 import project.muleoba.repository.ItemRepository;
 import project.muleoba.repository.TransactionRepository;
 import project.muleoba.vo.TransactionVO;
@@ -44,8 +43,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public void deleteTransaction(Long tID) {
-        transactionRepository.deleteById(tID);
+    public void deleteTransaction(Long requestiID, Long iID) {
+        transactionRepository.deleteById(transactionRepository.findDeleteTID(requestiID, iID));
     }
 
     @Override

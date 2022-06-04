@@ -3,6 +3,7 @@ package project.muleoba.domain;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -24,7 +25,8 @@ public class Transaction {
     @Column(updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime requestTime;
 
-    @NotNull
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'Normal'")
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)

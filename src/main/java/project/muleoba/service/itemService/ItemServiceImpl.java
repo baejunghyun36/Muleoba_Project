@@ -1,13 +1,16 @@
 package project.muleoba.service.itemService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import project.muleoba.domain.Item;
 import project.muleoba.domain.Status;
+import project.muleoba.domain.Transaction;
 import project.muleoba.domain.User;
+import project.muleoba.repository.TransactionRepository;
 import project.muleoba.repository.UserRepository;
 import project.muleoba.repository.ItemRepository;
 import project.muleoba.vo.ItemVO;
@@ -22,11 +25,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ItemServiceImpl implements  ItemService{
 
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
+    private final TransactionRepository transactionRepository;
     @PersistenceContext
     EntityManager entityManager;
     @Override
@@ -45,6 +50,11 @@ public class ItemServiceImpl implements  ItemService{
         user.setItems(items);
 
         itemRepository.save(item);
+    }
+
+    @Override
+    public Item findByIID(Long iID){
+        return itemRepository.findByiID(iID);
     }
 
     public String filePath(List<MultipartFile> images) throws Exception{
@@ -181,7 +191,7 @@ public class ItemServiceImpl implements  ItemService{
     @Override
     public List<ItemVO> itemSuccessList(Long uID, String address) {
 
-        List<Item> itemList = userRepository.itemMyList(uID);
+        List<Item> itemList = userRepository.itemSuccessList(uID);
         List<ItemVO> itemVOList = new ArrayList<>();
         for (Item item : itemList) {
             entityManager.refresh(item);
@@ -198,6 +208,51 @@ public class ItemServiceImpl implements  ItemService{
                 itemVO.setUploadTime(item.getUploadTime());
                 itemVOList.add(itemVO);
             }
+        }
+        return itemVOList;
+    }
+
+    @Override
+    public List<ItemVO> myItemRequestIId(Long uID) {
+       List <Transaction> transactionList = transactionRepository.findAllDateDesc(uID);
+       List<ItemVO> itemVOList = new ArrayList<>();
+        for (Transaction t : transactionList) {
+            Item item = itemRepository.findByiID(t.getRequestIID());
+            ItemVO itemVO = new ItemVO();
+            itemVO.setIID(item.getIID());
+            itemVO.setItem(item.getItem());
+            itemVO.setRequestNum(item.getRequestNum());
+            itemVO.setCategory(item.getCategory());
+            itemVO.setContent(item.getContent());
+            itemVO.setAddress(userRepository.findByuID(uID).getAddress());
+            itemVO.setPhoto(item.getPhoto());
+            itemVO.setNickName(item.getUser().getNickName());
+            itemVO.setUploadTime(t.getRequestTime());
+            itemVO.setRequestiID(t.getItem().getIID());
+            itemVOList.add(itemVO);
+        }
+        return itemVOList;
+    }
+
+    @Override
+    public List<ItemVO> requestItem(Long uID) {
+        List <Transaction> transactionList = transactionRepository.findAllDateDesc(uID);
+        List<ItemVO> itemVOList = new ArrayList<>();
+        for (Transaction t : transactionList) {
+            Item item = itemRepository.findByiID(t.getItem().getIID());
+            ItemVO itemVO = new ItemVO();
+            itemVO.setIID(item.getIID());
+            itemVO.setItem(item.getItem());
+            itemVO.setRequestNum(item.getRequestNum());
+            itemVO.setCategory(item.getCategory());
+            itemVO.setContent(item.getContent());
+            itemVO.setRequestiID(t.getRequestIID());
+            itemVO.setAddress(item.getUser().getAddress());
+            itemVO.setPhoto(item.getPhoto());
+            itemVO.setNickName(item.getUser().getNickName());
+            itemVO.setRequestiID(t.getRequestIID());
+            itemVO.setUploadTime(t.getRequestTime());
+            itemVOList.add(itemVO);
         }
         return itemVOList;
     }

@@ -4,16 +4,15 @@ package project.muleoba.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.muleoba.domain.Transaction;
 import project.muleoba.service.transactionService.TransactionService;
 import project.muleoba.vo.TransactionVO;
 
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class TransactionController {
@@ -30,9 +29,14 @@ public class TransactionController {
         Transaction transaction = transactionService.findTransaction(tID);
         return transaction;
     }
-    @PostMapping("/3") //거래삭제
-    public void deleteTransaction(Long tID){
-        transactionService.deleteTransaction(tID);
+
+    @PostMapping("/muleoba/requestcancel") //거래삭제
+    public void deleteTransaction(@RequestBody Map<String, Long> obj){
+        Long requestiID = obj.get("requestiID");
+        Long iID = obj.get("iID");
+
+        log.info("요깃지{}{}",requestiID,iID);
+        transactionService.deleteTransaction(requestiID, iID);
     }
 
     @PostMapping("/4")//특정 아이템에 교환 신청한 리스트

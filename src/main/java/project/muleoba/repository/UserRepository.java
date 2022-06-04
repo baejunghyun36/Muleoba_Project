@@ -32,4 +32,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select i from Item i where i.user.uID = :uID order by i.uploadTime desc")
     List<Item> itemMyList(@Param("uID") Long uID);
+
+    @Query("select i from Item i where i.user.uID = :uID order by i.uploadTime desc")
+    List<Item> itemSuccessList(@Param("uID") Long uID);
 }

@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import project.muleoba.domain.Item;
 import project.muleoba.domain.User;
 import project.muleoba.form.itemForm;
 import project.muleoba.service.itemService.ItemService;
 import project.muleoba.service.userService.UserService;
 import project.muleoba.vo.ItemVO;
+import project.muleoba.service.userService.UserService;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class ItemController {
 
     @PostMapping("/muleoba/uploadItem")
     public String uploadItem(@RequestPart(value = "files", required = false) List<MultipartFile> photo,
-                              @RequestPart(value = "data", required = false) itemForm data) throws Exception{
+                             @RequestPart(value = "data", required = false) itemForm data) throws Exception{
         System.out.println("In controller");
         System.out.println(photo);
         for(MultipartFile p: photo){
@@ -33,6 +35,33 @@ public class ItemController {
         System.out.println(data.getContent());
 
         itemService.saveItem(itemService.filePath(photo), data.getItemName(), data.getCategory(), data.getContent());
+
+        return "ok";
+    }
+
+    @PostMapping("/muleoba/getItem")
+    public ItemVO getItem(@RequestParam("iID") String iID){
+        Item item = itemService.findByIID(Long.parseLong(iID));
+        ItemVO itemVO = new ItemVO();
+        itemVO.setIID(Long.parseLong(iID));
+        itemVO.setItem(item.getItem());
+        itemVO.setCategory(item.getCategory());
+        itemVO.setContent(item.getContent());
+        itemVO.setPhoto(item.getPhoto());
+
+        return itemVO;
+    }
+
+    @PostMapping("/muleoba/updateItem")
+    public String updateItem(@RequestPart("photo") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
+        System.out.println(data.getIID());
+
+        //이미지 안들어올때 처리해야함...
+//        Item item = itemService.findByIID(Long.parseLong(data.getIID()));
+//        item.setPhoto(itemService.filePath(photo));
+//        item.setItem(data.getItemName());
+//        item.setCategory(data.getCategory());
+//        item.setContent(data.getContent());
 
         return "ok";
     }
@@ -67,9 +96,20 @@ public class ItemController {
 
     }
 
+    @GetMapping("/muleoba/requestid")
+    public List<ItemVO> requestid(Long uID){
+        return itemService.myItemRequestIId(uID);
+    }
+
+    @GetMapping("/muleoba/requestitem")
+    public List<ItemVO> requestItem(Long uID){
+        return itemService.requestItem(uID);
+    }
+
 
     @PostMapping("/333")//삭제
-    public void deleteItem(Long iID){
+    public void deleteItem(Long iID) {
+
         itemService.deleteItem(iID);
     }
 
