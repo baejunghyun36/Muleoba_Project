@@ -20,7 +20,9 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping("/1") //아이템, 상대방 아이템 거래 요청 저장.
-    public void saveTransaction(Long IID, Long requestIID){
+    public void saveTransaction(@RequestBody Map map){
+        Long requestIID = Long.parseLong(String.valueOf(map.get("requestiID")));
+        Long IID = Long.parseLong(String.valueOf(map.get("iID")));
         //IID 본인 아이템, requestIID 상대방 아이템
         transactionService.save(IID, requestIID);
     }
@@ -45,7 +47,10 @@ public class TransactionController {
         return transactionList;
     }
     @PostMapping("/5") //교환 수락
-    public void acceptRequest(Long IID, Long requestIID){ //아이템 IID, 요청아이템 IID
+    public void acceptRequest(@RequestBody Map map){ //아이템 IID, 요청아이템 IID
+        Long requestIID = Long.parseLong(String.valueOf(map.get("requestiID")));
+        Long IID = Long.parseLong(String.valueOf(map.get("iID")));
+
         transactionService.acceptRequest(IID, requestIID);
     }
 
