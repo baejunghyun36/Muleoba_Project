@@ -5,5 +5,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AlarmService {
 
-    void saveAlarm(Long IID);
+    Long saveAlarm(Long IID);
+//    Long getAID(Long IID);
 }
