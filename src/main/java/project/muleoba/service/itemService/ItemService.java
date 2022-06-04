@@ -10,6 +10,8 @@ public interface ItemService {
 
     void saveItem(String photo, String itemName, String category, String content);
 
+    void updateItem(Long iID, String photo, String itemName, String category, String content);
+
     String filePath(List<MultipartFile> images) throws Exception;
 
     Item findByIID(Long iID);

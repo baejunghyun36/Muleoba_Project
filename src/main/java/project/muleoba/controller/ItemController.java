@@ -8,7 +8,6 @@ import project.muleoba.domain.Item;
 import project.muleoba.domain.User;
 import project.muleoba.form.itemForm;
 import project.muleoba.service.itemService.ItemService;
-import project.muleoba.service.userService.UserService;
 import project.muleoba.vo.ItemVO;
 import project.muleoba.service.userService.UserService;
 
@@ -53,15 +52,15 @@ public class ItemController {
     }
 
     @PostMapping("/muleoba/updateItem")
-    public String updateItem(@RequestPart("files") List<MultipartFile> photo,@RequestPart("data") itemForm data) throws Exception{
+    public String updateItem(@RequestPart("photo") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
         System.out.println(data.getItemID());
 
-        //이미지 안들어올때 처리해야함...
-        Item item = itemService.findByIID(Long.parseLong(data.getItemID()));
-        item.setPhoto(itemService.filePath(photo));
-        item.setItem(data.getItemName());
-        item.setCategory(data.getCategory());
-        item.setContent(data.getContent());
+        if(photo == null){
+            itemService.updateItem(Long.parseLong(data.getItemID()), null, data.getItemName(), data.getCategory(), data.getContent());
+        }
+        else {
+            itemService.updateItem(Long.parseLong(data.getItemID()), itemService.filePath(photo), data.getItemName(), data.getCategory(), data.getContent());
+        }
 
         return "ok";
     }
