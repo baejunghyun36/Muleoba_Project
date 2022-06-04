@@ -219,4 +219,17 @@ public class ItemServiceImplTest {
             System.out.println();
         }
     }
+
+    @Test
+    public void searchItem(){
+
+        List<ItemVO> itemVOList = itemService.searchItem("의", 1L);
+        for(ItemVO i : itemVOList){
+            System.out.println("i.getIID() = " + i.getIID());
+            System.out.println("i.getItem() = " + i.getItem());
+            System.out.println("i.getAddress() = " + i.getAddress());
+            System.out.println("i.time() = " + i.getUploadTime());
+            System.out.println();
+        }
+    }
 }

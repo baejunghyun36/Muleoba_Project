@@ -12,6 +12,7 @@ import project.muleoba.vo.ItemVO;
 import project.muleoba.service.userService.UserService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -105,6 +106,15 @@ public class ItemController {
         return itemService.requestItem(uID);
     }
 
+    @PostMapping("/muleoba/searchitem")
+    public List<ItemVO> searchitem (@RequestBody Map<String, String> map){
+        String searchString = map.get("searchString");
+        String uID = map.get("uID");
+
+        return itemService.searchItem(searchString, Long.parseLong(uID));
+
+
+    }
 
     @PostMapping("/333")//삭제
     public void deleteItem(Long iID) {
