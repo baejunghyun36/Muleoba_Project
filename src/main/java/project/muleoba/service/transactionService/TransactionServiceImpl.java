@@ -3,10 +3,11 @@ package project.muleoba.service.transactionService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.muleoba.domain.Status;
-import project.muleoba.domain.Transaction;
+import project.muleoba.domain.*;
+import project.muleoba.repository.AlarmRepository;
 import project.muleoba.repository.ItemRepository;
 import project.muleoba.repository.TransactionRepository;
+import project.muleoba.service.alarmService.AlarmService;
 import project.muleoba.vo.TransactionVO;
 
 import javax.persistence.EntityManager;
@@ -21,6 +22,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final ItemRepository itemRepository;
+    private final AlarmRepository alarmRepository;
+    private final AlarmService alarmService;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -29,6 +32,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public void save(Long IID, Long requestIID) {
         Transaction t = new Transaction();
+        t.setAlarm(entityManager.find(Alarm.class, alarmService.saveAlarm(IID)));
         t.setRequestIID(requestIID);
         t.setItem(itemRepository.findByiID(IID));
         t.setStatus(Status.Normal);

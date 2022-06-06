@@ -42,6 +42,7 @@ public class ItemServiceImpl implements  ItemService{
         item.setContent(content);
         item.setPhoto(photo);
 
+        //로그인 user로 변경해야 함
         User user = userRepository.findByuID(1L);
         item.setUser(user);
 
@@ -50,6 +51,22 @@ public class ItemServiceImpl implements  ItemService{
         user.setItems(items);
 
         itemRepository.save(item);
+    }
+
+    public void updateItem(Long iID, String photo, String itemName, String category, String content){
+        Item item = itemRepository.findByiID(iID);
+        if(photo != null)
+            item.setPhoto(photo);
+        item.setItem(itemName);
+        item.setCategory(category);
+        item.setContent(content);
+
+        itemRepository.save(item);
+    }
+
+    @Override
+    public Item findByIID(Long iID){
+        return itemRepository.findByiID(iID);
     }
 
     public String filePath(List<MultipartFile> images) throws Exception{
@@ -248,6 +265,31 @@ public class ItemServiceImpl implements  ItemService{
             itemVO.setRequestiID(t.getRequestIID());
             itemVO.setUploadTime(t.getRequestTime());
             itemVOList.add(itemVO);
+        }
+        return itemVOList;
+    }
+
+    @Override
+    public List<ItemVO> searchItem(String searchString, Long uID) {
+
+        List <Item> itemList = itemRepository.findAllOrder();
+        List <ItemVO> itemVOList = new ArrayList<>();
+        String address = userRepository.findByuID(uID).getAddress();
+        for (Item item : itemList) {
+            entityManager.refresh(item);
+            if(item.getUser().getAddress().equals(address)&&item.getItem().contains(searchString)){
+                ItemVO itemVO = new ItemVO();
+                itemVO.setIID(item.getIID());
+                itemVO.setItem(item.getItem());
+                itemVO.setRequestNum(item.getRequestNum());
+                itemVO.setCategory(item.getCategory());
+                itemVO.setContent(item.getContent());
+                itemVO.setAddress(address);
+                itemVO.setPhoto(item.getPhoto());
+                itemVO.setUploadTime(item.getUploadTime());
+                itemVO.setNickName(item.getUser().getNickName());
+                itemVOList.add(itemVO);
+            }
         }
         return itemVOList;
     }

@@ -17,6 +17,8 @@ public class UserVO {
     private String password;
     private String address;
 
+    public UserVO() {}
+
     // Long uID, String email, String nickName, String phoneNumber, String name, String password, String address
     public UserVO(User user) {
         this.uID = user.getUID();
