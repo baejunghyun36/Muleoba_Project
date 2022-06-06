@@ -5,9 +5,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import project.muleoba.domain.Alarm;
-import project.muleoba.domain.Transaction;
+import project.muleoba.vo.AlarmToReact;
+
+import java.util.List;
 
 @Repository
-public interface AlarmRepository extends JpaRepository<Transaction, Long> {
+public interface AlarmRepository extends JpaRepository<Alarm, Long> {
+
+    // 기존
+    @Query("SELECT a.aID as alarmNum, i.iID as itemNum, i.item as itemName, t.requestIID as requestItemNum, u.nickName as requestNickName, r.item as requestItem, a.readStatus as isRead, a.alarmTime as timeAl\n" +
+            "FROM Transaction t JOIN t.alarm a JOIN t.item i JOIN a.user m, Item r JOIN r.user u\n" +
+            "WHERE t.requestIID = r.iID AND m.uID = :uID")
+    List<AlarmToReact> findAllAlarmList(@Param("uID") Long uid);
 
 }

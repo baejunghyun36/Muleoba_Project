@@ -22,7 +22,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final ItemRepository itemRepository;
-    private final AlarmRepository alarmRepository;
     private final AlarmService alarmService;
 
     @PersistenceContext
