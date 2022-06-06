@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 
@@ -18,6 +19,6 @@ public interface AlarmToReact {
     String getRequestNickName(); // 교환요청자 닉네임
     String getRequestItem(); // 교환요청자 아이템 이름
     Boolean getIsRead(); // 읽음 유무
-    Date getTimeAl(); // 날짜
+    String getTimeAl(); // 날짜
 
 }
