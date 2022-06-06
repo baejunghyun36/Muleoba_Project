@@ -6,17 +6,17 @@ import org.springframework.transaction.annotation.Transactional;
 import project.muleoba.domain.Alarm;
 import project.muleoba.domain.Item;
 import project.muleoba.repository.AlarmRepository;
-import project.muleoba.repository.ItemRepository;
+import project.muleoba.vo.AlarmToReact;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class AlarmServiceImpl implements AlarmService{
 
-    ItemRepository itemRepository;
-    AlarmRepository alarmRepository;
+    private final AlarmRepository alarmRepository;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -33,6 +33,10 @@ public class AlarmServiceImpl implements AlarmService{
         return al.getAID();
     }
 
-//    public Long getAID(Long IID) {
-//    }
+    @Override
+    @Transactional
+    public List<AlarmToReact> findAllAlarmList(Long uid) {
+        return alarmRepository.findAllAlarmList(uid);
+    }
+
 }
