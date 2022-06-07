@@ -26,4 +26,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query("select i.iID from Item i where i.user.uID = :uID")
     List<Long> findByiIDList(Long uID);
+
+    @Query("select i from Item i, Transaction t where t.status <>'Complete' and t.item.iID=:iid and t.requestIID = i.iID")
+    List<Item> requestList(@Param("iid") Long iid);
 }
