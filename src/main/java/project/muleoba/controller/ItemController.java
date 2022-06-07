@@ -78,7 +78,10 @@ public class ItemController {
         User user = userService.findByuID(uID);
         String address = user.getAddress();
 
-        if(category==null)return itemService.itemList(address);
+        if(category==null){
+            log.info("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+            return itemService.itemList(address);
+        }
         else return itemService.itemCategoryList(category, address);
 
     }
@@ -122,13 +125,13 @@ public class ItemController {
         itemService.deleteItem(iID);
     }
 
-    @GetMapping ("/muleoba/detail/{iid}")
-    public ItemVO detail(@PathVariable("iid") Long iid ){
+    @GetMapping("/muleoba/detail")
+    public ItemVO detail(@RequestParam("iid") Long iid ){
         return itemService.detailItem(iid);
     }
 
-    @GetMapping("/muleoba/detail/request/{iid}")
-    public List<ItemVO> detailRequestList(@PathVariable("iid") Long iid){
+    @GetMapping("/muleoba/detail/request")
+    public List<ItemVO> detailRequestList(@RequestParam("iid") Long iid){
         return itemService.detailRequestList(iid);
     }
 }
