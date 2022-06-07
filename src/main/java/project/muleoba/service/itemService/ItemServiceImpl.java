@@ -75,7 +75,8 @@ public class ItemServiceImpl implements  ItemService{
 
         if(!CollectionUtils.isEmpty(images)){ //이미지 파일이 존재할 경우
             //프로젝트 내의 static 폴더까지의 절대 경로
-            String absolutePath = new File("").getAbsolutePath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static";
+//            String absolutePath = new File("").getAbsolutePath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static";
+            String absolutePath ="C:\\Users\\bae10\\Desktop\\muleoba_front\\Muleoba_Front\\public";
 
             for(MultipartFile image : images){
                 String originalFileExtension = new String();
@@ -94,19 +95,47 @@ public class ItemServiceImpl implements  ItemService{
                 }
 
                 String newFileName = System.nanoTime()+originalFileExtension; //이미지 이름이 겹치지 않게 나노시간을 이름으로 사진 저장
-                File file = new File(absolutePath+File.separator+"itemImage"+File.separator+newFileName);
+//                File file = new File(absolutePath+File.separator+"itemImage"+File.separator+newFileName);
+                File file = new File(absolutePath+File.separator+"img"+File.separator+newFileName);
+                log.info("여기 2 {}",absolutePath+File.separator+"itemImage"+File.separator+newFileName );
+
                 image.transferTo(file);
                 file.setWritable(true);
                 file.setReadable(true);
 
-                if(photoRoute.length() == 0) { // 첫번째 이미지인 경우
+
+
+                String absolutePath2 = "C:\\Users\\bae10\\Desktop\\muleoba_front\\Muleoba_Front\\public\\img\\";
+
+
+              /*  String absolutePath2 = new File("C:\\Users\\bae10\\Desktop\\muleoba_front\\Muleoba_Front\\public\\img").getPath();*/
+
+                String newFileName2 = newFileName;
+                //log.info("여기 {}", absolutePath2+File.separator+"itemImage"+File.separator + newFileName2);
+//                log.info("여기 {}", absolutePath2+newFileName2);
+//                File file2 = new File(absolutePath2+ newFileName2);
+//
+//                MultipartFile image2 = image;
+//                log.info("{}", file2);
+//                image2.transferTo(file2);
+//                file2.setWritable(true);
+//                file2.setReadable(true);
+
+            /*    if(photoRoute.length() == 0) { // 첫번째 이미지인 경우
                     photoRoute = File.separator + "itemImage" + File.separator + newFileName;
                 }
                 else{
                     photoRoute = photoRoute+" "+File.separator + "itemImage" + File.separator + newFileName;
+                }*/
+                if(photoRoute.length() == 0) { // 첫번째 이미지인 경우
+                    photoRoute =  newFileName;
+                }
+                else{
+                    photoRoute = photoRoute+" " + newFileName;
                 }
             }
         }
+        log.info("ggg {}", photoRoute);
 
         return photoRoute;
     }
