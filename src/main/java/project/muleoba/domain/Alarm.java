@@ -24,6 +24,9 @@ public class Alarm {
     @NotNull
     private Boolean readStatus;
 
+    @NotNull
+    private Boolean deleteStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="uID")
     private User user;
