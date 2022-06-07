@@ -122,7 +122,7 @@ public class ItemController {
         itemService.deleteItem(iID);
     }
 
-    @GetMapping("/muleoba/detail/{iid}")
+    @PutMapping ("/muleoba/detail/{iid}")
     public ItemVO detail(@PathVariable("iid") Long iid ){
         return itemService.detailItem(iid);
     }
