@@ -222,7 +222,6 @@ public class ItemServiceImplTest {
 
     @Test
     public void searchItem(){
-
         List<ItemVO> itemVOList = itemService.searchItem("의", 1L);
         for(ItemVO i : itemVOList){
             System.out.println("i.getIID() = " + i.getIID());
