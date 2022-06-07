@@ -43,7 +43,7 @@ public class UserController {
         return userService.findNickNameUser(nickName);
     }
 
-    @PostMapping("/muleoba/login") // 로그인
+    @PostMapping("/muleoba/login") // 로그인 [ 리턴값 : uID값 (로그인 실패 : 0 )]
     public Long userLogin(@RequestBody Map map) {
         String email = String.valueOf(map.get("email"));
         String password = String.valueOf(map.get("password"));
