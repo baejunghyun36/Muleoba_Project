@@ -13,7 +13,7 @@ import java.util.List;
 public interface AlarmRepository extends JpaRepository<Alarm, Long> {
 
     // 기존
-    @Query("SELECT a.aID as alarmNum, i.iID as itemNum, i.item as itemName, t.requestIID as requestItemNum, u.nickName as requestNickName, r.item as requestItem, a.readStatus as isRead, a.alarmTime as timeAl\n" +
+    @Query("SELECT a.aID as alarmNum, i.iID as itemNum, i.item as itemName, t.requestIID as requestItemNum, u.nickName as requestNickName, r.item as requestItem, a.readStatus as isRead, DATE_FORMAT(a.alarmTime, '%y-%m-%d') as timeAl\n" +
             "FROM Transaction t JOIN t.alarm a JOIN t.item i JOIN a.user m, Item r JOIN r.user u\n" +
             "WHERE t.requestIID = r.iID AND m.uID = :uID")
     List<AlarmToReact> findAllAlarmList(@Param("uID") Long uid);
