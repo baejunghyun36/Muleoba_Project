@@ -322,4 +322,27 @@ public class ItemServiceImpl implements  ItemService{
         }
         return itemVOList;
     }
+
+    @Override
+    public List<ItemVO> detailRequestList(Long iid) {
+        List <Item> itemList = itemRepository.requestList(iid);
+        List <ItemVO> itemVOList = new ArrayList<>();
+        for (Item item : itemList) {
+            entityManager.refresh(item);
+           {
+                ItemVO itemVO = new ItemVO();
+                itemVO.setIID(item.getIID());
+                itemVO.setItem(item.getItem());
+                itemVO.setRequestNum(item.getRequestNum());
+                itemVO.setCategory(item.getCategory());
+                itemVO.setContent(item.getContent());
+                itemVO.setAddress(item.getUser().getAddress());
+                itemVO.setPhoto(item.getPhoto());
+                itemVO.setUploadTime(item.getUploadTime());
+                itemVO.setNickName(item.getUser().getNickName());
+                itemVOList.add(itemVO);
+            }
+        }
+        return itemVOList;
+    }
 }

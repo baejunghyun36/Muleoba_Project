@@ -33,4 +33,6 @@ public interface ItemService {
     List<ItemVO> requestItem(Long uID);
 
     List<ItemVO> searchItem(String searchString, Long uID);
+
+    List<ItemVO> detailRequestList(Long iid);
 }
