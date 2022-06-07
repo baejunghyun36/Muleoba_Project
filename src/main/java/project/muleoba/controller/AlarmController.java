@@ -23,8 +23,8 @@ public class AlarmController {
     }
 
     @GetMapping("/muleoba/alarm/isread") // 알람 읽기
-    public void alarmRead(@RequestParam Long aID) {
-        alarmService.readAlarm(aID);
+    public void alarmRead(@RequestParam Long alarmNum) {
+        alarmService.readAlarm(alarmNum);
     }
 
     @GetMapping("/muleoba/alarm/alldelete") // 알람 전체삭제
