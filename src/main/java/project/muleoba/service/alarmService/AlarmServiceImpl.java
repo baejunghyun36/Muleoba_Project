@@ -25,7 +25,8 @@ public class AlarmServiceImpl implements AlarmService{
     @Transactional
     public Long saveAlarm(Long IID) {
         Alarm al = new Alarm();
-        al.setReadStatus(false);
+        al.setReadStatus(true);
+        al.setDeleteStatus(false);
         Item item = entityManager.find(Item.class, IID);
         al.setUser(item.getUser());
         entityManager.persist(al);
@@ -37,6 +38,24 @@ public class AlarmServiceImpl implements AlarmService{
     @Transactional
     public List<AlarmToReact> findAllAlarmList(Long uid) {
         return alarmRepository.findAllAlarmList(uid);
+    }
+
+    @Override
+    @Transactional
+    public void readAlarm(Long aid) {
+        alarmRepository.readAlarm(aid);
+    }
+
+    @Override
+    @Transactional
+    public void allDeleteAlarm(Long uid) {
+        alarmRepository.allDeleteAlarm(uid);
+    }
+
+    @Override
+    @Transactional
+    public void selectDeleteAlarm(Long uid) {
+        alarmRepository.selectDeleteAlarm(uid);
     }
 
 }

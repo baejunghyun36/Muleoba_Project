@@ -39,7 +39,7 @@ public class ItemController {
         return "ok";
     }
 
-    @PostMapping("/muleoba/getItem")
+    @GetMapping("/muleoba/getItem")
     public ItemVO getItem(@RequestParam("iID") String iID){
         Item item = itemService.findByIID(Long.parseLong(iID));
         ItemVO itemVO = new ItemVO();
@@ -122,4 +122,13 @@ public class ItemController {
         itemService.deleteItem(iID);
     }
 
+    @GetMapping("/muleoba/detail/{iid}")
+    public ItemVO detail(@PathVariable("iid") Long iid ){
+        return itemService.detailItem(iid);
+    }
+
+    @GetMapping("/muleoba/detail/request/{iid}")
+    public List<ItemVO> detailRequestList(@PathVariable("iid") Long iid){
+        return itemService.detailRequestList(iid);
+    }
 }
