@@ -71,4 +71,10 @@ public class TransactionController {
         List<TransactionVO> transactionVOList = transactionService.requestMyItems(1L);
         return transactionVOList;
     }
+
+    @GetMapping("/muleoba/requestmodal")
+    public void requestmodal(Long uID, Long requestiid, Long iid){
+        transactionService.requestmodal(uID, requestiid, iid);
+    }
+
 }

@@ -19,6 +19,7 @@ public class ItemVO {
     private LocalDateTime uploadTime;
     private String address;
     private Long requestiID;
+    private Long itemUid;
 
 
 
