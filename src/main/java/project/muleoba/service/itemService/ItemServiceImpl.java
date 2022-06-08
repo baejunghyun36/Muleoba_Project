@@ -294,6 +294,7 @@ public class ItemServiceImpl implements  ItemService{
             itemVO.setRequestNum(item.getRequestNum());
             itemVO.setCategory(item.getCategory());
             itemVO.setContent(item.getContent());
+            itemVO.setStatus(item.getStatus());
             itemVO.setRequestiID(t.getRequestIID());
             itemVO.setAddress(item.getUser().getAddress());
             itemVO.setPhoto(item.getPhoto());
