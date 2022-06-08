@@ -152,4 +152,22 @@ public class TransactionServiceImpl implements TransactionService {
         transactionRepository.save(transaction);
 
     }
+
+    @Transactional
+    @Override
+    public void deletepost(Long iid) {
+
+        List<Transaction> all = transactionRepository.findAll();
+        List<Long> aid = new ArrayList<>();
+        List<Long> tid = new ArrayList<>();
+        for (Transaction t : all) {
+            if (t.getItem().getIID() == iid) {
+                tid.add(t.getTID());
+                aid.add(t.getAlarm().getAID());
+            }
+        }
+        for(Long t : tid) transactionRepository.deleteById(t);
+        itemRepository.deleteById(iid);
+        for(Long a : aid) alarmRepository.deleteIid(a);
+    }
 }

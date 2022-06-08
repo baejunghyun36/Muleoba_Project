@@ -76,4 +76,8 @@ public class TransactionController {
         transactionService.requestmodal(uID, requestiid, iid);
     }
 
+    @GetMapping("/muleoba/detail/deletepost")
+    public void deletepost(Long iid){
+        transactionService.deletepost(iid);
+    }
 }

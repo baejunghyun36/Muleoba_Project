@@ -28,4 +28,6 @@ public interface TransactionService {
     List<TransactionVO> requestMyItems(Long uID);
 
     void requestmodal(Long uID, Long requestiid, Long iid);
+
+    void deletepost(Long iid);
 }
