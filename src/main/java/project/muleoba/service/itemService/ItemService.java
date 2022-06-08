@@ -35,4 +35,6 @@ public interface ItemService {
     List<ItemVO> searchItem(String searchString, Long uID);
 
     List<ItemVO> detailRequestList(Long iid);
+
+    void acceptComplete(Long iid, Long urliid);
 }
