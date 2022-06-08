@@ -76,7 +76,7 @@ public class ItemServiceImpl implements  ItemService{
         if(!CollectionUtils.isEmpty(images)){ //이미지 파일이 존재할 경우
             //프로젝트 내의 static 폴더까지의 절대 경로
 //            String absolutePath = new File("").getAbsolutePath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static";
-            String absolutePath ="C:\\Users\\bae10\\Desktop\\muleoba_front\\Muleoba_Front\\public";
+            String absolutePath ="C:\\kdt-venture\\workspace_react\\muleoba_front\\public";
 
             for(MultipartFile image : images){
                 String originalFileExtension = new String();
@@ -105,7 +105,7 @@ public class ItemServiceImpl implements  ItemService{
 
 
 
-                String absolutePath2 = "C:\\Users\\bae10\\Desktop\\muleoba_front\\Muleoba_Front\\public\\img\\";
+                String absolutePath2 = "C:\\kdt-venture\\workspace_react\\muleoba_front\\public\\img\\";
 
 
               /*  String absolutePath2 = new File("C:\\Users\\bae10\\Desktop\\muleoba_front\\Muleoba_Front\\public\\img").getPath();*/
@@ -148,6 +148,7 @@ public class ItemServiceImpl implements  ItemService{
         itemVO.setIID(item.getIID());
         itemVO.setCategory(item.getCategory());
         itemVO.setContent(item.getContent());
+        itemVO.setAddress(item.getUser().getAddress());
         itemVO.setPhoto(item.getPhoto());
         itemVO.setNickName(item.getUser().getNickName());
         return itemVO;
@@ -327,6 +328,7 @@ public class ItemServiceImpl implements  ItemService{
     public List<ItemVO> detailRequestList(Long iid) {
         List <Item> itemList = itemRepository.requestList(iid);
         List <ItemVO> itemVOList = new ArrayList<>();
+
         for (Item item : itemList) {
             entityManager.refresh(item);
            {

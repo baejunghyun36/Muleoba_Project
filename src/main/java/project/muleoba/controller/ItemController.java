@@ -132,6 +132,8 @@ public class ItemController {
 
     @GetMapping("/muleoba/detail/request")
     public List<ItemVO> detailRequestList(@RequestParam("iid") Long iid){
+        log.info("iid : {}", iid);
+
         return itemService.detailRequestList(iid);
     }
 }
