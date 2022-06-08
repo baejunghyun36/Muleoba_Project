@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/muleoba/login") // 로그인 [ 리턴값 : uID값 (로그인 실패 : 0 )]
-    public Long userLogin(@RequestBody Map map) {
+    public Long userLogin(@RequestBody Map<String, String> map) {
         String email = String.valueOf(map.get("email"));
         String password = String.valueOf(map.get("password"));
         return userService.loginUser(email, password);
