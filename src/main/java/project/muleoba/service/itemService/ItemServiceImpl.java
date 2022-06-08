@@ -45,7 +45,7 @@ public class ItemServiceImpl implements  ItemService{
         item.setContent(content);
         item.setPhoto(photo);
         //로그인 user로 변경해야 함
-        User user = userRepository.findByuID(1L);
+        User user = userRepository.findByuID(uuID);
         item.setUser(user);
 
         List<Item> items = user.getItems();
