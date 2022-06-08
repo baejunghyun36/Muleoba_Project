@@ -40,7 +40,7 @@ public class ItemController {
     }
 
     @GetMapping("/muleoba/getItem")
-    public ItemVO getItem(@RequestParam("iID") String iID){
+    public ItemVO getItem(@RequestParam("iid") String iID){
         Item item = itemService.findByIID(Long.parseLong(iID));
         ItemVO itemVO = new ItemVO();
         itemVO.setIID(Long.parseLong(iID));
