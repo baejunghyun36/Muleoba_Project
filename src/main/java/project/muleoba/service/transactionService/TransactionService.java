@@ -26,4 +26,6 @@ public interface TransactionService {
     List<TransactionVO> completeRequestList(Long uID);
 
     List<TransactionVO> requestMyItems(Long uID);
+
+    void requestmodal(Long uID, Long requestiid, Long iid);
 }

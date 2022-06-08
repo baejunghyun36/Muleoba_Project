@@ -7,6 +7,7 @@ import project.muleoba.domain.*;
 import project.muleoba.repository.AlarmRepository;
 import project.muleoba.repository.ItemRepository;
 import project.muleoba.repository.TransactionRepository;
+import project.muleoba.repository.UserRepository;
 import project.muleoba.service.alarmService.AlarmService;
 import project.muleoba.vo.TransactionVO;
 
@@ -23,6 +24,8 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final ItemRepository itemRepository;
     private final AlarmService alarmService;
+    private final UserRepository userRepository;
+    private final AlarmRepository alarmRepository;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -49,6 +52,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public void deleteTransaction(Long requestiID, Long iID) {
         transactionRepository.deleteById(transactionRepository.findDeleteTID(requestiID, iID));
+        Item item = itemRepository.findByiID(iID);
+        item.setRequestNum(item.getRequestNum() - 1);
+        itemRepository.save(item);
     }
 
     @Override
@@ -124,6 +130,26 @@ public class TransactionServiceImpl implements TransactionService {
             }
         }
         return transactionVOList;
+
+    }
+
+    @Transactional
+    @Override
+    public void requestmodal(Long uID, Long requestiid, Long iid) {
+        Item item = itemRepository.findByiID(iid);
+        item.setRequestNum(item.getRequestNum()+1);
+        itemRepository.save(item);
+        Alarm alarm = new Alarm();
+        Transaction transaction = new Transaction();
+        alarm.setReadStatus(true);
+        alarm.setDeleteStatus(false);
+        alarm.setUser(userRepository.findByuID(itemRepository.findByiID(iid).getUser().getUID()));
+        alarm.setTransaction(transaction);
+        transaction.setRequestIID(requestiid);
+        transaction.setAlarm(alarm);
+        transaction.setItem(itemRepository.findByiID(iid));
+        alarmRepository.save(alarm);
+        transactionRepository.save(transaction);
 
     }
 }
