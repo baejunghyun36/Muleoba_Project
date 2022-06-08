@@ -2,6 +2,8 @@ package project.muleoba.service.itemService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -34,16 +36,16 @@ public class ItemServiceImpl implements  ItemService{
     private final TransactionRepository transactionRepository;
     @PersistenceContext
     EntityManager entityManager;
+
     @Override
-    public void saveItem(String photo, String itemName, String category, String content) {
+    public void saveItem(String photo, String itemName, String category, String content, Long uuID) {
         Item item = new Item();
         item.setItem(itemName);
         item.setCategory(category);
         item.setContent(content);
         item.setPhoto(photo);
-
         //로그인 user로 변경해야 함
-        User user = userRepository.findByuID(1L);
+        User user = userRepository.findByuID(uuID);
         item.setUser(user);
 
         List<Item> items = user.getItems();
@@ -53,10 +55,11 @@ public class ItemServiceImpl implements  ItemService{
         itemRepository.save(item);
     }
 
+    @Transactional
+    @Override
     public void updateItem(Long iID, String photo, String itemName, String category, String content){
         Item item = itemRepository.findByiID(iID);
-        if(photo != null)
-            item.setPhoto(photo);
+        if(photo != null) item.setPhoto(photo);
         item.setItem(itemName);
         item.setCategory(category);
         item.setContent(content);
@@ -69,6 +72,8 @@ public class ItemServiceImpl implements  ItemService{
         return itemRepository.findByiID(iID);
     }
 
+
+    @Override
     public String filePath(List<MultipartFile> images) throws Exception{
 
         String photoRoute = new String();
@@ -97,7 +102,7 @@ public class ItemServiceImpl implements  ItemService{
                 String newFileName = System.nanoTime()+originalFileExtension; //이미지 이름이 겹치지 않게 나노시간을 이름으로 사진 저장
 //                File file = new File(absolutePath+File.separator+"itemImage"+File.separator+newFileName);
                 File file = new File(absolutePath+File.separator+"img"+File.separator+newFileName);
-                log.info("여기 2 {}",absolutePath+File.separator+"itemImage"+File.separator+newFileName );
+
 
                 image.transferTo(file);
                 file.setWritable(true);
@@ -150,6 +155,7 @@ public class ItemServiceImpl implements  ItemService{
         itemVO.setContent(item.getContent());
         itemVO.setAddress(item.getUser().getAddress());
         itemVO.setPhoto(item.getPhoto());
+        itemVO.setItemUid(item.getUser().getUID());
         itemVO.setNickName(item.getUser().getNickName());
         return itemVO;
     }
