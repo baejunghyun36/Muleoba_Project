@@ -17,7 +17,7 @@ public class AlarmController {
     private final AlarmService alarmService;
 
     @PostMapping("/muleoba/get/alarm/list") // 알람 가져오기
-    public List<AlarmToReact> getAlarmList(@RequestBody Map map) {
+    public List<AlarmToReact> getAlarmList(@RequestBody Map<String, String> map) {
         Long uid = parseLong(String.valueOf(map.get("uID")));
         return alarmService.findAllAlarmList(uid);
     }

@@ -31,4 +31,7 @@ public interface AlarmRepository extends JpaRepository<Alarm, Long> {
     @Query("UPDATE Alarm a SET a.deleteStatus = true WHERE a.readStatus = false AND a.user.uID = :uid")
     void selectDeleteAlarm(@Param("uid") Long uid);
 
+    @Modifying
+    @Query("delete from Alarm a where a.user.item.iID = :iid")
+    void deleteIid(@Param("iid") Long iid);
 }

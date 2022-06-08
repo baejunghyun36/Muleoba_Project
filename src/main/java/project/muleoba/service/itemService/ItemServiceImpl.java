@@ -173,6 +173,7 @@ public class ItemServiceImpl implements  ItemService{
                 itemVO.setCategory(item.getCategory());
                 itemVO.setContent(item.getContent());
                 itemVO.setAddress(address);
+                itemVO.setItemUid(item.getUser().getUID());
                 itemVO.setPhoto(item.getPhoto());
                 itemVO.setUploadTime(item.getUploadTime());
                 itemVO.setNickName(item.getUser().getNickName());
@@ -196,6 +197,7 @@ public class ItemServiceImpl implements  ItemService{
                 itemVO.setRequestNum(item.getRequestNum());
                 itemVO.setCategory(item.getCategory());
                 itemVO.setContent(item.getContent());
+                itemVO.setItemUid(item.getUser().getUID());
                 itemVO.setAddress(address);
                 itemVO.setPhoto(item.getPhoto());
                 itemVO.setNickName(item.getUser().getNickName());
