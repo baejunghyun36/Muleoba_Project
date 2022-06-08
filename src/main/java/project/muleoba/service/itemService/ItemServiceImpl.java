@@ -45,7 +45,7 @@ public class ItemServiceImpl implements  ItemService{
         item.setContent(content);
         item.setPhoto(photo);
         //로그인 user로 변경해야 함
-        User user = userRepository.findByuID(1L);
+        User user = userRepository.findByuID(uuID);
         item.setUser(user);
 
         List<Item> items = user.getItems();
@@ -154,6 +154,7 @@ public class ItemServiceImpl implements  ItemService{
         itemVO.setCategory(item.getCategory());
         itemVO.setContent(item.getContent());
         itemVO.setPhoto(item.getPhoto());
+        itemVO.setItemUid(item.getUser().getUID());
         itemVO.setNickName(item.getUser().getNickName());
         return itemVO;
     }

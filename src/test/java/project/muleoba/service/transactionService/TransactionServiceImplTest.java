@@ -168,5 +168,12 @@ public class TransactionServiceImplTest {
         }
     }
 
+    @Test
+    @Transactional   //  @PostMapping("/8") 내가 교환신청한 물품들
+    public void requestmodal(){
+
+        transactionService.requestmodal(1L, 1L, 2L);
+    }
+
 
 }
