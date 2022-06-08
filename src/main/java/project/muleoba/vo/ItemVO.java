@@ -1,6 +1,7 @@
 package project.muleoba.vo;
 import lombok.Getter;
 import lombok.Setter;
+import project.muleoba.domain.Status;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +21,7 @@ public class ItemVO {
     private String address;
     private Long requestiID;
     private Long itemUid;
+    private Status status;
 
 
 
