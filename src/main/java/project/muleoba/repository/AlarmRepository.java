@@ -3,13 +3,14 @@ package project.muleoba.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import project.muleoba.domain.Alarm;
 import project.muleoba.vo.AlarmToReact;
 
 import java.util.List;
-
+@EnableJpaRepositories
 @Repository
 public interface AlarmRepository extends JpaRepository<Alarm, Long> {
 
@@ -31,4 +32,7 @@ public interface AlarmRepository extends JpaRepository<Alarm, Long> {
     @Query("UPDATE Alarm a SET a.deleteStatus = true WHERE a.readStatus = false AND a.user.uID = :uid")
     void selectDeleteAlarm(@Param("uid") Long uid);
 
+    @Modifying
+    @Query("delete from Alarm a where a.aID = :aid")
+    void deleteIid(@Param("aid") Long aid);
 }

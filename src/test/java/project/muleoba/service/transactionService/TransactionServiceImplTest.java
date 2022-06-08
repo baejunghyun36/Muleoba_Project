@@ -173,7 +173,14 @@ public class TransactionServiceImplTest {
     public void requestmodal(){
 
         transactionService.requestmodal(1L, 1L, 2L);
+        transactionService.requestmodal(3L, 3L, 2L);
     }
 
+    @Test
+    @Transactional   //  @PostMapping("/8") 내가 교환신청한 물품들
+    public void deletepost(){
+
+        transactionService.deletepost(2L);
+    }
 
 }
