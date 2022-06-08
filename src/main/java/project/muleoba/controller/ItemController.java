@@ -33,6 +33,7 @@ public class ItemController {
         System.out.println(data.getItemName());
         System.out.println(data.getCategory());
         System.out.println(data.getContent());
+        System.out.println(data.getUuID());
 
         itemService.saveItem(itemService.filePath(photo), data.getItemName(), data.getCategory(), data.getContent(), data.getUuID());
 
@@ -40,7 +41,7 @@ public class ItemController {
     }
 
     @GetMapping("/muleoba/getItem")
-    public ItemVO getItem(@RequestParam("iID") String iID){
+    public ItemVO getItem(@RequestParam("iid") String iID){
         Item item = itemService.findByIID(Long.parseLong(iID));
         ItemVO itemVO = new ItemVO();
         itemVO.setIID(Long.parseLong(iID));
@@ -53,7 +54,7 @@ public class ItemController {
     }
 
     @PostMapping("/muleoba/updateItem")
-    public String updateItem(@RequestPart("photo") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
+    public String updateItem(@RequestPart("files") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
         System.out.println(data.getItemID());
 
         if(photo == null){

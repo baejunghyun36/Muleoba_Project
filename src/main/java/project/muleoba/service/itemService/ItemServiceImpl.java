@@ -81,7 +81,7 @@ public class ItemServiceImpl implements  ItemService{
         if(!CollectionUtils.isEmpty(images)){ //이미지 파일이 존재할 경우
             //프로젝트 내의 static 폴더까지의 절대 경로
 //            String absolutePath = new File("").getAbsolutePath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static";
-            String absolutePath ="C:\\Users\\bae10\\Desktop\\muleoba_front\\Muleoba_Front\\public";
+            String absolutePath ="/Users/angiekim/Documents/multicampus/3rd project/workspace/Muleoba_Front/public";
 
             for(MultipartFile image : images){
                 String originalFileExtension = new String();
@@ -110,7 +110,7 @@ public class ItemServiceImpl implements  ItemService{
 
 
 
-                String absolutePath2 = "C:\\Users\\bae10\\Desktop\\muleoba_front\\Muleoba_Front\\public\\img\\";
+                String absolutePath2 = "/Users/angiekim/Documents/multicampus/3rd project/workspace/Muleoba_Front/public/img/";
 
 
               /*  String absolutePath2 = new File("C:\\Users\\bae10\\Desktop\\muleoba_front\\Muleoba_Front\\public\\img").getPath();*/
