@@ -357,17 +357,11 @@ public class ItemServiceImpl implements  ItemService{
     @Override
     public void acceptComplete(Long iid, Long urliid) {
         Transaction t = transactionRepository.findAccept(iid,urliid);
-        Transaction t2 = transactionRepository.findAccept(urliid, iid);
         t.setStatus(Status.Complete);
-        t2.setStatus(Status.Complete);
         Alarm a = t.getAlarm();
-        Alarm a2 = t2.getAlarm();
         a.setDeleteStatus(true);
-        a2.setDeleteStatus(true);
         alarmRepository.save(a);
-        alarmRepository.save(a2);
         transactionRepository.save(t);
-        transactionRepository.save(t2);
         Item item1 = itemRepository.findByiID(iid);
         Item item2 = itemRepository.findByiID(urliid);
         item1.setStatus(Status.Complete);
