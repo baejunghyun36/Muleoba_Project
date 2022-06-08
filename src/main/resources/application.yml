@@ -5,6 +5,12 @@ spring:
     username: root
     password: mcys1309
 
+#  hikari:
+#    pool-name: SpringBootJPAHikariCP
+#    maximum-pool-size: 20
+#    connection-timeout: 20000
+#    validation-timeout: 10000
+
   servlet:
     multipart:
       enabled: true

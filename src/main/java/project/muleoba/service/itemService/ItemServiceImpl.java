@@ -2,6 +2,8 @@ package project.muleoba.service.itemService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -34,14 +36,14 @@ public class ItemServiceImpl implements  ItemService{
     private final TransactionRepository transactionRepository;
     @PersistenceContext
     EntityManager entityManager;
+
     @Override
-    public void saveItem(String photo, String itemName, String category, String content) {
+    public void saveItem(String photo, String itemName, String category, String content, Long uuID) {
         Item item = new Item();
         item.setItem(itemName);
         item.setCategory(category);
         item.setContent(content);
         item.setPhoto(photo);
-
         //로그인 user로 변경해야 함
         User user = userRepository.findByuID(1L);
         item.setUser(user);
@@ -53,10 +55,11 @@ public class ItemServiceImpl implements  ItemService{
         itemRepository.save(item);
     }
 
+    @Transactional
+    @Override
     public void updateItem(Long iID, String photo, String itemName, String category, String content){
         Item item = itemRepository.findByiID(iID);
-        if(photo != null)
-            item.setPhoto(photo);
+        if(photo != null) item.setPhoto(photo);
         item.setItem(itemName);
         item.setCategory(category);
         item.setContent(content);
@@ -69,6 +72,8 @@ public class ItemServiceImpl implements  ItemService{
         return itemRepository.findByiID(iID);
     }
 
+
+    @Override
     public String filePath(List<MultipartFile> images) throws Exception{
 
         String photoRoute = new String();

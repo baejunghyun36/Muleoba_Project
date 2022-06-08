@@ -34,7 +34,7 @@ public class ItemController {
         System.out.println(data.getCategory());
         System.out.println(data.getContent());
 
-        itemService.saveItem(itemService.filePath(photo), data.getItemName(), data.getCategory(), data.getContent());
+        itemService.saveItem(itemService.filePath(photo), data.getItemName(), data.getCategory(), data.getContent(), data.getUuID());
 
         return "ok";
     }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ItemService {
 
-    void saveItem(String photo, String itemName, String category, String content);
+    void saveItem(String photo, String itemName, String category, String content, Long uuID);
 
     void updateItem(Long iID, String photo, String itemName, String category, String content);
 
