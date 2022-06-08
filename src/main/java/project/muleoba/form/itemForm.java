@@ -14,4 +14,6 @@ public class itemForm {
     private String category;
 
     private String content;
+
+    private Long uuID;
 }
