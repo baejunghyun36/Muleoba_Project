@@ -36,7 +36,6 @@ public class TransactionController {
     public void deleteTransaction(@RequestBody Map<String, Long> obj){
         Long requestiID = obj.get("requestiID");
         Long iID = obj.get("iID");
-
         log.info("요깃지{}{}",requestiID,iID);
         transactionService.deleteTransaction(requestiID, iID);
     }

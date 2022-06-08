@@ -52,6 +52,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public void deleteTransaction(Long requestiID, Long iID) {
         transactionRepository.deleteById(transactionRepository.findDeleteTID(requestiID, iID));
+        Item item = itemRepository.findByiID(iID);
+        item.setRequestNum(item.getRequestNum() - 1);
+        itemRepository.save(item);
     }
 
     @Override
