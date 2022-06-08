@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
-import project.muleoba.domain.Item;
-import project.muleoba.domain.Status;
-import project.muleoba.domain.Transaction;
-import project.muleoba.domain.User;
+import project.muleoba.domain.*;
+import project.muleoba.repository.AlarmRepository;
 import project.muleoba.repository.TransactionRepository;
 import project.muleoba.repository.UserRepository;
 import project.muleoba.repository.ItemRepository;
@@ -34,6 +32,7 @@ public class ItemServiceImpl implements  ItemService{
     private final UserRepository userRepository;
 
     private final TransactionRepository transactionRepository;
+    private final AlarmRepository alarmRepository;
     @PersistenceContext
     EntityManager entityManager;
 
@@ -352,5 +351,28 @@ public class ItemServiceImpl implements  ItemService{
             }
         }
         return itemVOList;
+    }
+
+    @Transactional
+    @Override
+    public void acceptComplete(Long iid, Long urliid) {
+        Transaction t = transactionRepository.findAccept(iid,urliid);
+        Transaction t2 = transactionRepository.findAccept(urliid, iid);
+        t.setStatus(Status.Complete);
+        t2.setStatus(Status.Complete);
+        Alarm a = t.getAlarm();
+        Alarm a2 = t2.getAlarm();
+        a.setDeleteStatus(true);
+        a2.setDeleteStatus(true);
+        alarmRepository.save(a);
+        alarmRepository.save(a2);
+        transactionRepository.save(t);
+        transactionRepository.save(t2);
+        Item item1 = itemRepository.findByiID(iid);
+        Item item2 = itemRepository.findByiID(urliid);
+        item1.setStatus(Status.Complete);
+        item2.setStatus(Status.Complete);
+        itemRepository.save(item1);
+        itemRepository.save(item2);
     }
 }

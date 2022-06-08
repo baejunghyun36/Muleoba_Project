@@ -34,4 +34,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Modifying
     @Query("delete from Transaction t where t.item.iID = :iid")
     void deleteIid(@Param("iid") Long iid);
+
+    @Query("select t from Transaction  t where t.item.iID=:urliid and t.requestIID = :iid")
+    Transaction findAccept(@Param("iid") Long iid,@Param("urliid") Long urliid);
 }

@@ -134,4 +134,11 @@ public class ItemController {
     public List<ItemVO> detailRequestList(@RequestParam("iid") Long iid){
         return itemService.detailRequestList(iid);
     }
+
+
+    //iid 는 requestiid , urliid 는 주인 물품품
+    @GetMapping("/muleoba/detail/accept")
+    public void acceptComplete(Long iid, Long urliid){
+        itemService.acceptComplete(iid, urliid);
+    }
 }
