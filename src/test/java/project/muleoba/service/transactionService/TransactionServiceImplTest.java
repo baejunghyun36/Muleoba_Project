@@ -16,6 +16,8 @@ import project.muleoba.domain.User;
 import project.muleoba.repository.ItemRepository;
 import project.muleoba.repository.TransactionRepository;
 import project.muleoba.repository.UserRepository;
+import project.muleoba.service.itemService.ItemService;
+import project.muleoba.service.userService.UserService;
 import project.muleoba.vo.TransactionVO;
 
 import javax.persistence.EntityManager;
@@ -42,6 +44,9 @@ public class TransactionServiceImplTest {
 
     @Autowired
     TransactionRepository transactionRepository;
+
+    @Autowired
+    ItemService itemService;
 
 
     @Test
@@ -182,5 +187,13 @@ public class TransactionServiceImplTest {
 
         transactionService.deletepost(2L);
     }
+
+    @Test
+    @Transactional   //  @PostMapping("/8") 내가 교환신청한 물품들
+    public void acceptComplete(){
+
+        itemService.acceptComplete(2L, 3L);
+    }
+
 
 }
