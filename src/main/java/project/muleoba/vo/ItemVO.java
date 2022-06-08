@@ -21,7 +21,7 @@ public class ItemVO {
     private String address;
     private Long requestiID;
     private Long itemUid;
-    private Status status;
+    private Status sstatus;
 
 
 
