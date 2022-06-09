@@ -142,6 +142,7 @@ public class ItemController {
     //iid 는 requestiid , urliid 는 주인 물품품
     @GetMapping("/muleoba/detail/accept")
     public void acceptComplete(Long iid, Long urliid){
+        log.info("여깃찌{}{}",iid,urliid);
         itemService.acceptComplete(iid, urliid);
     }
 }
