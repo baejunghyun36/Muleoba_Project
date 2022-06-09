@@ -54,7 +54,8 @@ public class ItemController {
     }
 
     @PostMapping("/muleoba/updateItem")
-    public String updateItem(@RequestPart("files") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
+    public String updateItem(@RequestPart(value = "files", required = false) List<MultipartFile> photo,
+                             @RequestPart(value = "data", required = false) itemForm data) throws Exception{
         System.out.println(data.getItemID());
 
         if(photo == null){
@@ -97,6 +98,7 @@ public class ItemController {
     @GetMapping("/muleoba/successlist")
     public List<ItemVO> itemSuccessList(Long uID){
         return itemService.itemSuccessList(uID, userService.findByuID(uID).getAddress());
+
     }
 
     @GetMapping("/muleoba/requestid")
@@ -132,6 +134,8 @@ public class ItemController {
 
     @GetMapping("/muleoba/detail/request")
     public List<ItemVO> detailRequestList(@RequestParam("iid") Long iid){
+        log.info("iid : {}", iid);
+
         return itemService.detailRequestList(iid);
     }
 
@@ -139,6 +143,7 @@ public class ItemController {
     //iid 는 requestiid , urliid 는 주인 물품품
     @GetMapping("/muleoba/detail/accept")
     public void acceptComplete(Long iid, Long urliid){
+        log.info("여깃찌{}{}",iid,urliid);
         itemService.acceptComplete(iid, urliid);
     }
 }
