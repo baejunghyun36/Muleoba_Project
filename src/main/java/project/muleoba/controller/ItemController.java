@@ -54,7 +54,8 @@ public class ItemController {
     }
 
     @PostMapping("/muleoba/updateItem")
-    public String updateItem(@RequestPart("files") List<MultipartFile> photo, @RequestPart("data") itemForm data) throws Exception{
+    public String updateItem(@RequestPart(value = "files", required = false) List<MultipartFile> photo,
+                             @RequestPart(value = "data", required = false) itemForm data) throws Exception{
         System.out.println(data.getItemID());
 
         if(photo == null){
